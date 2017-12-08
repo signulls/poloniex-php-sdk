@@ -13,7 +13,7 @@ namespace Poloniex\NonceProvider;
 
 use Poloniex\ApiKey;
 
-class FilesystemNonceProvider implements NonceProviderInterface
+class FilesystemNonceProvider implements NonceProviderInterface, IncreasingNonceInterface
 {
     /**
      * Path to the nonce files
@@ -45,9 +45,7 @@ class FilesystemNonceProvider implements NonceProviderInterface
     }
 
     /**
-     * Increase nonce
-     *
-     * @param ApiKey $apiKey
+     * {@inheritdoc}
      */
     public function increase(ApiKey $apiKey): void
     {

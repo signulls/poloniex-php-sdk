@@ -1,0 +1,354 @@
+{
+  "USDT_ZEC": [
+    {
+      "globalTradeID": 264183704,
+      "tradeID": "1636707",
+      "date": "2017-11-19 13:51:21",
+      "rate": "302.00000000",
+      "amount": "0.15575022",
+      "total": "47.03656644",
+      "fee": "0.00150000",
+      "orderNumber": "46656459018",
+      "type": "sell",
+      "category": "exchange"
+    }
+  ],
+  "USDT_STR": [
+    {
+      "globalTradeID": 264150471,
+      "tradeID": "1569062",
+      "date": "2017-11-19 12:44:32",
+      "rate": "0.03721694",
+      "amount": "2.67694847",
+      "total": "0.09962783",
+      "fee": "0.00150000",
+      "orderNumber": "38755350980",
+      "type": "buy",
+      "category": "exchange"
+    },
+    {
+      "globalTradeID": 264150227,
+      "tradeID": "1569036",
+      "date": "2017-11-19 12:44:01",
+      "rate": "0.03721694",
+      "amount": "0.01000000",
+      "total": "0.00037216",
+      "fee": "0.00250000",
+      "orderNumber": "38755350980",
+      "type": "buy",
+      "category": "exchange"
+    },
+    {
+      "globalTradeID": 263825044,
+      "tradeID": "1537852",
+      "date": "2017-11-19 01:01:43",
+      "rate": "0.03700000",
+      "amount": "451.67775949",
+      "total": "16.71207710",
+      "fee": "0.00150000",
+      "orderNumber": "38635704746",
+      "type": "sell",
+      "category": "exchange"
+    },
+    {
+      "globalTradeID": 263682771,
+      "tradeID": "1529729",
+      "date": "2017-11-18 20:09:07",
+      "rate": "0.03559999",
+      "amount": "452.80978394",
+      "total": "16.12002378",
+      "fee": "0.00250000",
+      "orderNumber": "38635642808",
+      "type": "buy",
+      "category": "exchange"
+    }
+  ],
+  "USDT_XRP": [
+    {
+      "globalTradeID": 264105095,
+      "tradeID": "2376559",
+      "date": "2017-11-19 11:12:17",
+      "rate": "0.23500000",
+      "amount": "46.81623294",
+      "total": "11.00181474",
+      "fee": "0.00150000",
+      "orderNumber": "64218702142",
+      "type": "sell",
+      "category": "exchange"
+    }
+  ],
+  "USDT_ETC": [
+    {
+      "globalTradeID": 263854416,
+      "tradeID": "1826652",
+      "date": "2017-11-19 02:06:33",
+      "rate": "17.50900000",
+      "amount": "0.01062575",
+      "total": "0.18604625",
+      "fee": "0.00150000",
+      "orderNumber": "190479979523",
+      "type": "buy",
+      "category": "exchange"
+    },
+    {
+      "globalTradeID": 263854388,
+      "tradeID": "1826649",
+      "date": "2017-11-19 02:06:28",
+      "rate": "17.50900000",
+      "amount": "0.14277555",
+      "total": "2.49985710",
+      "fee": "0.00150000",
+      "orderNumber": "190479979523",
+      "type": "buy",
+      "category": "exchange"
+    },
+    {
+      "globalTradeID": 263854386,
+      "tradeID": "1826648",
+      "date": "2017-11-19 02:06:28",
+      "rate": "17.50900000",
+      "amount": "0.08566533",
+      "total": "1.49991426",
+      "fee": "0.00150000",
+      "orderNumber": "190479979523",
+      "type": "buy",
+      "category": "exchange"
+    },
+    {
+      "globalTradeID": 263854385,
+      "tradeID": "1826647",
+      "date": "2017-11-19 02:06:28",
+      "rate": "17.50900000",
+      "amount": "0.14277555",
+      "total": "2.49985710",
+      "fee": "0.00150000",
+      "orderNumber": "190479979523",
+      "type": "buy",
+      "category": "exchange"
+    },
+    {
+      "globalTradeID": 263854384,
+      "tradeID": "1826646",
+      "date": "2017-11-19 02:06:28",
+      "rate": "17.50900000",
+      "amount": "0.02855511",
+      "total": "0.49997142",
+      "fee": "0.00150000",
+      "orderNumber": "190479979523",
+      "type": "buy",
+      "category": "exchange"
+    },
+    {
+      "globalTradeID": 263854345,
+      "tradeID": "1826644",
+      "date": "2017-11-19 02:06:24",
+      "rate": "17.50900000",
+      "amount": "0.02855511",
+      "total": "0.49997142",
+      "fee": "0.00150000",
+      "orderNumber": "190479979523",
+      "type": "buy",
+      "category": "exchange"
+    },
+    {
+      "globalTradeID": 263854344,
+      "tradeID": "1826643",
+      "date": "2017-11-19 02:06:24",
+      "rate": "17.50900000",
+      "amount": "0.14277555",
+      "total": "2.49985710",
+      "fee": "0.00150000",
+      "orderNumber": "190479979523",
+      "type": "buy",
+      "category": "exchange"
+    },
+    {
+      "globalTradeID": 263854342,
+      "tradeID": "1826642",
+      "date": "2017-11-19 02:06:24",
+      "rate": "17.50900000",
+      "amount": "0.14277555",
+      "total": "2.49985710",
+      "fee": "0.00150000",
+      "orderNumber": "190479979523",
+      "type": "buy",
+      "category": "exchange"
+    },
+    {
+      "globalTradeID": 263854340,
+      "tradeID": "1826641",
+      "date": "2017-11-19 02:06:24",
+      "rate": "17.50900000",
+      "amount": "0.14277555",
+      "total": "2.49985710",
+      "fee": "0.00150000",
+      "orderNumber": "190479979523",
+      "type": "buy",
+      "category": "exchange"
+    },
+    {
+      "globalTradeID": 263854338,
+      "tradeID": "1826640",
+      "date": "2017-11-19 02:06:24",
+      "rate": "17.50900000",
+      "amount": "0.08566533",
+      "total": "1.49991426",
+      "fee": "0.00150000",
+      "orderNumber": "190479979523",
+      "type": "buy",
+      "category": "exchange"
+    },
+    {
+      "globalTradeID": 263740170,
+      "tradeID": "1825575",
+      "date": "2017-11-18 21:49:08",
+      "rate": "17.80000000",
+      "amount": "1.22474059",
+      "total": "21.80038250",
+      "fee": "0.00250000",
+      "orderNumber": "190437635909",
+      "type": "buy",
+      "category": "exchange"
+    }
+  ],
+  "USDT_ETH": [
+    {
+      "globalTradeID": 263717963,
+      "tradeID": "5326862",
+      "date": "2017-11-18 21:23:21",
+      "rate": "339.01000000",
+      "amount": "0.06440262",
+      "total": "21.83313220",
+      "fee": "0.00150000",
+      "orderNumber": "143048828129",
+      "type": "sell",
+      "category": "exchange"
+    },
+    {
+      "globalTradeID": 263639603,
+      "tradeID": "5315073",
+      "date": "2017-11-18 18:41:42",
+      "rate": "336.00000000",
+      "amount": "0.04804829",
+      "total": "16.14422544",
+      "fee": "0.00150000",
+      "orderNumber": "143216675114",
+      "type": "sell",
+      "category": "exchange"
+    }
+  ],
+  "BTC_EMC2": [
+    {
+      "globalTradeID": 263579636,
+      "tradeID": "1495179",
+      "date": "2017-11-18 16:45:24",
+      "rate": "0.00001511",
+      "amount": "101.55952381",
+      "total": "0.00153456",
+      "fee": "0.00250000",
+      "orderNumber": "9843821353",
+      "type": "buy",
+      "category": "exchange"
+    }
+  ],
+  "USDT_BTC": [
+    {
+      "globalTradeID": 263579480,
+      "tradeID": "12053403",
+      "date": "2017-11-18 16:45:08",
+      "rate": "7650.00000000",
+      "amount": "0.00010058",
+      "total": "0.76943700",
+      "fee": "0.00150000",
+      "orderNumber": "110911957141",
+      "type": "buy",
+      "category": "exchange"
+    },
+    {
+      "globalTradeID": 263579476,
+      "tradeID": "12053402",
+      "date": "2017-11-18 16:45:08",
+      "rate": "7650.00000000",
+      "amount": "0.00019599",
+      "total": "1.49932350",
+      "fee": "0.00150000",
+      "orderNumber": "110911957141",
+      "type": "buy",
+      "category": "exchange"
+    },
+    {
+      "globalTradeID": 263579451,
+      "tradeID": "12053400",
+      "date": "2017-11-18 16:45:06",
+      "rate": "7650.00000000",
+      "amount": "0.00032665",
+      "total": "2.49887250",
+      "fee": "0.00150000",
+      "orderNumber": "110911957141",
+      "type": "buy",
+      "category": "exchange"
+    },
+    {
+      "globalTradeID": 263579448,
+      "tradeID": "12053399",
+      "date": "2017-11-18 16:45:05",
+      "rate": "7650.00000000",
+      "amount": "0.00032665",
+      "total": "2.49887250",
+      "fee": "0.00150000",
+      "orderNumber": "110911957141",
+      "type": "buy",
+      "category": "exchange"
+    },
+    {
+      "globalTradeID": 263579442,
+      "tradeID": "12053398",
+      "date": "2017-11-18 16:45:05",
+      "rate": "7650.00000000",
+      "amount": "0.00019599",
+      "total": "1.49932350",
+      "fee": "0.00150000",
+      "orderNumber": "110911957141",
+      "type": "buy",
+      "category": "exchange"
+    },
+    {
+      "globalTradeID": 263579437,
+      "tradeID": "12053397",
+      "date": "2017-11-18 16:45:05",
+      "rate": "7650.00000000",
+      "amount": "0.00006533",
+      "total": "0.49977450",
+      "fee": "0.00150000",
+      "orderNumber": "110911957141",
+      "type": "buy",
+      "category": "exchange"
+    },
+    {
+      "globalTradeID": 263579436,
+      "tradeID": "12053396",
+      "date": "2017-11-18 16:45:05",
+      "rate": "7650.00000000",
+      "amount": "0.00032665",
+      "total": "2.49887250",
+      "fee": "0.00150000",
+      "orderNumber": "110911957141",
+      "type": "buy",
+      "category": "exchange"
+    }
+  ],
+  "USDT_XMR": [
+    {
+      "globalTradeID": 263569552,
+      "tradeID": "1543320",
+      "date": "2017-11-18 16:23:07",
+      "rate": "130.00000000",
+      "amount": "0.09063203",
+      "total": "11.78216390",
+      "fee": "0.00150000",
+      "orderNumber": "100493732799",
+      "type": "sell",
+      "category": "exchange"
+    }
+  ]
+}

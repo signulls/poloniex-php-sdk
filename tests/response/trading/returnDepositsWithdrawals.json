@@ -1,0 +1,33 @@
+{
+  "deposits": [
+    {
+      "currency": "BTC",
+      "address": "13WSidUvXrHjcDMKnGJmWm5UwVQey4i1LA",
+      "amount": "0.00520713",
+      "confirmations": 1,
+      "txid": "4e8c95271fe1eadb3a2cbce3c9ed30b9764816b3a86d9bb5fae7c323febdb6cb",
+      "timestamp": 1510252527,
+      "status": "COMPLETE"
+    },
+    {
+      "currency": "BTC",
+      "address": "13WSidUvXrHjcDMKnGJmWm5UwVQey4i1LA",
+      "amount": "0.01327729",
+      "confirmations": 1,
+      "txid": "64f76a15286f16114292d935fdc91fe29307867ddae222659502aa901d6f64d7",
+      "timestamp": 1510518461,
+      "status": "COMPLETE"
+    }
+  ],
+  "withdrawals": [
+    {
+      "withdrawalNumber": 134933,
+      "currency": "BTC",
+      "address": "1N2i5n8DwTGzUq2Vmn9TUL8J1vdr1XBDFg",
+      "amount": "5.00010000",
+      "timestamp": 1399267904,
+      "status": "COMPLETE: 36e483efa6aff9fd53a235177579d98451c4eb237c210e66cd2b9a2d4a988f8e",
+      "ipAddress": "123.123.123.123"
+    }
+  ]
+}

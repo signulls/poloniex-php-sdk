@@ -1,0 +1,19 @@
+dist: trusty
+sudo: false
+language: php
+
+php:
+  - 7.1
+  - 7.2
+  - nightly
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+    
+before_script:
+    - composer self-update
+    - composer install --prefer-source --no-interaction
+
+script:
+  - vendor/bin/phpunit

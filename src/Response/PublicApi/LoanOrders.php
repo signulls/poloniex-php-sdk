@@ -14,6 +14,11 @@ namespace Poloniex\Response\PublicApi;
 use Poloniex\Response\AbstractResponse;
 use Poloniex\Response\PublicApi\LoanOrders\{Offer, Demand};
 
+/**
+ * Class LoanOrders
+ *
+ * @author Grisha Chasovskih <chasovskihgrisha@gmail.com>
+ */
 class LoanOrders extends AbstractResponse
 {
     /**

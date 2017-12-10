@@ -12,10 +12,9 @@
 namespace Poloniex\Response;
 
 /**
- * Class ErrorResponse
  * In the event of an error, the response will always be of the following format.
  *
- * @package Poloniex\Exchange\Poloniex\Response
+ * @author Grisha Chasovskih <chasovskihgrisha@gmail.com>
  */
 class ErrorResponse extends AbstractResponse
 {
@@ -25,4 +24,14 @@ class ErrorResponse extends AbstractResponse
      * @var string
      */
     public $error;
+
+    /**
+     * ErrorResponse constructor.
+     *
+     * @param string $error
+     */
+    public function __construct(string $error = null)
+    {
+        $this->error = $error;
+    }
 }

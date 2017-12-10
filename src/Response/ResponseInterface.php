@@ -11,9 +11,21 @@
 
 namespace Poloniex\Response;
 
+/**
+ * Interface ResponseInterface
+ *
+ * @author Grisha Chasovskih <chasovskihgrisha@gmail.com>
+ */
 interface ResponseInterface
 {
     /**
+     * Common format for date fields
+     */
+    public const DATE_FORMAT = 'Y-m-d H:i:s';
+
+    /**
+     * Check whether response is failed
+     *
      * @return bool
      */
     public function isFailed(): bool;

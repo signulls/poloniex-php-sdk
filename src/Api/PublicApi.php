@@ -23,9 +23,9 @@ use Poloniex\Response\PublicApi\{
 };
 
 /**
- * Class PublicApi
- *
  * There are six public methods, all of which take HTTP GET requests and return output in JSON format.
+ *
+ * @author Grisha Chasovskih <chasovskihgrisha@gmail.com>
  */
 class PublicApi extends AbstractApi
 {
@@ -45,7 +45,7 @@ class PublicApi extends AbstractApi
      *
      * @return Ticker[]
      */
-    public function ticker(): array
+    public function returnTicker(): array
     {
         $tickers = [];
         foreach ($this->request('returnTicker') as $pair => $response) {
@@ -64,7 +64,7 @@ class PublicApi extends AbstractApi
      *
      * @return DayVolume
      */
-    public function dayVolume(): DayVolume
+    public function return24hVolume(): DayVolume
     {
         $response = new DayVolume();
 
@@ -84,15 +84,16 @@ class PublicApi extends AbstractApi
     /**
      * Returns the order book for a given market, as well as a sequence number for use
      * with the Push API and an indicator specifying whether the market is frozen.
-     * You may set currencyPair to "all" to get the order books of all markets.
      *
-     * @param string|null $currencyPair example: BTC_NXT
-     * @param int|null $depth example: 10
+     * @param string $currencyPair
+     * @param int $depth example: 10
      *
      * @return OrderBook
      */
-    public function orderBook(string $currencyPair, int $depth = null): OrderBook
+    public function returnOrderBook(string $currencyPair, int $depth = null): OrderBook
     {
+        $this->throwExceptionIf($currencyPair === 'all', 'Please use PublicApi::allOrderBook method');
+
         /* @var $orderBook OrderBook */
         $orderBook = $this->factory(OrderBook::class, $this->request('returnOrderBook', [
             'currencyPair' => strtoupper($currencyPair),
@@ -103,16 +104,35 @@ class PublicApi extends AbstractApi
     }
 
     /**
+     * Get the order books of all markets
+     *
+     * @param int $depth example: 10
+     * @return OrderBook[]
+     */
+    public function returnAllOrderBook(int $depth = null): array
+    {
+        $orderBooks = [];
+        foreach ($this->request('returnOrderBook', [
+            'currencyPair' => 'all',
+            'depth'        => $depth,
+        ]) as $currencyPair => $data) {
+            $orderBooks[$currencyPair] = $this->factory(OrderBook::class, $data);
+        }
+
+        return $orderBooks;
+    }
+
+    /**
      * Returns the past 200 trades for a given market, or up to 50,000 trades between a range
      * specified in UNIX timestamps by the "start" and "end" GET parameters.
      *
-     * @param string $currencyPair BTC_NXT
+     * @param string $currencyPair
      * @param int $start 1410158341
      * @param int $end 1410499372
      *
      * @return TradeHistory[]
      */
-    public function tradeHistory(string $currencyPair, int $start = null, int $end = null): array
+    public function returnTradeHistory(string $currencyPair, int $start = null, int $end = null): array
     {
         $tradeHistories = [];
         foreach ($this->request('returnTradeHistory', [
@@ -133,14 +153,14 @@ class PublicApi extends AbstractApi
      * values are 300, 900, 1800, 7200, 14400, and 86400), "start", and "end". "Start" and "end" are
      * given in UNIX timestamp format and used to specify the date range for the data returned.
      *
-     * @param string $currencyPair example: BTC_XMR
-     * @param int $start example: 1405699200
-     * @param int $end example: 9999999999
+     * @param string $currencyPair
+     * @param int $start  example: 1405699200
+     * @param int $end    example: 9999999999
      * @param int $period example: 300
      *
      * @return ChartData[]
      */
-    public function chartData(string $currencyPair, int $start = null, int $end = null, int $period = 300): array
+    public function returnChartData(string $currencyPair, int $start = null, int $end = null, int $period = 300): array
     {
         $this->throwExceptionIf(
             !\in_array($period, [300, 900, 1800, 7200, 14400, 86400], true),
@@ -166,7 +186,7 @@ class PublicApi extends AbstractApi
      *
      * @return Currency[]
      */
-    public function currencies(): array
+    public function returnCurrencies(): array
     {
         $currencies = [];
         foreach ($this->request('returnCurrencies') as $key => $response) {
@@ -183,7 +203,7 @@ class PublicApi extends AbstractApi
      * @param string $currency 3-digit currency
      * @return LoanOrders
      */
-    public function loanOrders(string $currency): LoanOrders
+    public function returnLoanOrders(string $currency): LoanOrders
     {
         /* @var $loanOrders LoanOrders */
         $loanOrders = $this->factory(

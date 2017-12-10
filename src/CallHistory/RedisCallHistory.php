@@ -14,6 +14,11 @@ namespace Poloniex\CallHistory;
 use Predis\Client;
 use DateTime;
 
+/**
+ * Class RedisCallHistory
+ *
+ * @author Grisha Chasovskih <chasovskihgrisha@gmail.com>
+ */
 class RedisCallHistory implements CallHistoryInterface
 {
     /**

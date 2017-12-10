@@ -13,6 +13,11 @@ namespace Poloniex\Api;
 
 use Poloniex\Exception\PoloniexException;
 
+/**
+ * Interface ApiInterface
+ *
+ * @author Grisha Chasovskih <chasovskihgrisha@gmail.com>
+ */
 interface ApiInterface
 {
     /**

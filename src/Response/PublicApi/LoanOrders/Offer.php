@@ -11,17 +11,22 @@
 
 namespace Poloniex\Response\PublicApi\LoanOrders;
 
+/**
+ * Class Offer
+ *
+ * @author Grisha Chasovskih <chasovskihgrisha@gmail.com>
+ */
 class Offer
 {
     /**
-     * Example: "0.00005885"
+     * Example: 0.00005885
      *
-     * @var string
+     * @var float
      */
     public $rate;
 
     /**
-     * Example: "1.05657993"
+     * Example: 1.05657993
      *
      * @var string
      */
@@ -40,4 +45,40 @@ class Offer
      * @var int
      */
     public $rangeMax;
+
+    /**
+     * @internal
+     * @param float $rate
+     */
+    public function setRate(float $rate): void
+    {
+        $this->rate = $rate;
+    }
+
+    /**
+     * @internal
+     * @param float $amount
+     */
+    public function setAmount(float $amount): void
+    {
+        $this->amount = $amount;
+    }
+
+    /**
+     * @internal
+     * @param int $rangeMin
+     */
+    public function setRangeMin(int $rangeMin): void
+    {
+        $this->rangeMin = $rangeMin;
+    }
+
+    /**
+     * @internal
+     * @param int $rangeMax
+     */
+    public function setRangeMax(int $rangeMax): void
+    {
+        $this->rangeMax = $rangeMax;
+    }
 }

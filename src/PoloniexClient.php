@@ -21,7 +21,8 @@ use Psr\Log\{LoggerAwareTrait, LoggerInterface};
  * NOTE: Currency pairs are reverse of what most exchanges use.
  *       For instance, instead of XPM_BTC, use BTC_XPM
  *
- * @link https://poloniex.com/support/api/
+ * @link   https://poloniex.com/support/api/
+ * @author Grisha Chasovskih <chasovskihgrisha@gmail.com>       
  */
 class PoloniexClient extends Client
 {
@@ -42,13 +43,13 @@ class PoloniexClient extends Client
      *
      * @param LoggerInterface      $logger
      * @param CallHistoryInterface $callHistory
-     * @param string               $timeout
+     * @param int                  $timeout
      * @param string               $baseUri
      */
     public function __construct(
         LoggerInterface $logger,
         CallHistoryInterface $callHistory,
-        string $timeout,
+        int $timeout = 5,
         string $baseUri = self::BASE_URI
     ) {
         $this->setLogger($logger);
@@ -71,8 +72,9 @@ class PoloniexClient extends Client
             sleep(1);
         }
 
+        $this->callHistory->create();
         $method = strtoupper($method);
-        $this->logger->info(sprintf('Send %s request to %s', $method, $this->getConfig('base_uri') . $uri), $options);
+        $this->logger->debug(sprintf('Send %s request to %s', $method, $this->getConfig('base_uri') . $uri), $options);
 
         return parent::request(strtoupper($method), $uri, $options);
     }

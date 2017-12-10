@@ -11,12 +11,17 @@
 
 namespace Poloniex\Response;
 
+/**
+ * Class AbstractResponse
+ *
+ * @author Grisha Chasovskih <chasovskihgrisha@gmail.com>
+ */
 abstract class AbstractResponse implements ResponseInterface
 {
     /**
      * {@inheritdoc}
      */
-    public function isFailed(): bool
+    final public function isFailed(): bool
     {
         return static::class instanceof ErrorResponse;
     }

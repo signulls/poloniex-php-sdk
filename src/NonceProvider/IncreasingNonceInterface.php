@@ -13,6 +13,11 @@ namespace Poloniex\NonceProvider;
 
 use Poloniex\ApiKey;
 
+/**
+ * Interface IncreasingNonceInterface
+ *
+ * @author Grisha Chasovskih <chasovskihgrisha@gmail.com>
+ */
 interface IncreasingNonceInterface
 {
     /**

@@ -13,6 +13,11 @@ namespace Poloniex\Response\PublicApi;
 
 use Poloniex\Response\AbstractResponse;
 
+/**
+ * Class DayVolume
+ *
+ * @author Grisha Chasovskih <chasovskihgrisha@gmail.com>
+ */
 class DayVolume extends AbstractResponse
 {
     /**

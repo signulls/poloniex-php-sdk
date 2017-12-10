@@ -15,6 +15,11 @@ use Poloniex\Exception\PoloniexException;
 use Poloniex\Response\ResponseInterface;
 use Symfony\Component\Serializer\{Serializer, SerializerInterface};
 
+/**
+ * Trait ResponseFactoryTrait
+ *
+ * @author Grisha Chasovskih <chasovskihgrisha@gmail.com>
+ */
 trait ResponseFactoryTrait
 {
     /**
@@ -43,6 +48,18 @@ trait ResponseFactoryTrait
         /* @var $response ResponseInterface */
         $response = $this->serializer->denormalize($data, $responseClass);
         $this->throwExceptionIf(!$response instanceof $responseClass, 'Poloniex response is not valid.');
+
+        if (isset($data['globalTradeID'])) {
+            $response->globalTradeId = (int) $data['globalTradeID'];
+        }
+
+        if (isset($data['tradeID'])) {
+            $response->tradeId = (int) $data['tradeID'];
+        }
+
+        if (isset($data['orderID'])) {
+            $response->orderId = (int) $data['orderID'];
+        }
 
         return $response;
     }

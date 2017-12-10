@@ -13,6 +13,11 @@ namespace Poloniex\Response\PublicApi;
 
 use Poloniex\Response\AbstractResponse;
 
+/**
+ * Class OrderBook
+ *
+ * @author Grisha Chasovskih <chasovskihgrisha@gmail.com>
+ */
 class OrderBook extends AbstractResponse
 {
     /**
@@ -57,7 +62,7 @@ class OrderBook extends AbstractResponse
     public $isFrozen;
 
     /**
-     * Examlple: 52954955
+     * Example: 52954955
      *
      * @var int
      */
@@ -70,5 +75,14 @@ class OrderBook extends AbstractResponse
     public function setIsFrozen(bool $isFrozen): void
     {
         $this->isFrozen = $isFrozen;
+    }
+
+    /**
+     * @internal
+     * @param int $seq
+     */
+    public function setSeq(int $seq): void
+    {
+        $this->seq = $seq;
     }
 }

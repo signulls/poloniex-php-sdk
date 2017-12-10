@@ -14,6 +14,11 @@ namespace Poloniex\Response\PublicApi;
 use Poloniex\Exception\PoloniexException;
 use Poloniex\Response\{AbstractResponse, Traits\DateTrait};
 
+/**
+ * Class TradeHistory
+ *
+ * @author Grisha Chasovskih <chasovskihgrisha@gmail.com>
+ */
 class TradeHistory extends AbstractResponse
 {
     use DateTrait;
@@ -32,7 +37,7 @@ class TradeHistory extends AbstractResponse
      *
      * @var int
      */
-    public $globalTradeID;
+    public $globalTradeId;
 
     /**
      * Trade id
@@ -40,7 +45,7 @@ class TradeHistory extends AbstractResponse
      *
      * @var int
      */
-    public $tradeID;
+    public $tradeId;
 
     /**
      * Example: "sell" or "buy"
@@ -52,21 +57,21 @@ class TradeHistory extends AbstractResponse
     /**
      * Example: "0.00000887"
      *
-     * @var string
+     * @var float
      */
     public $rate;
 
     /**
      * Example: "2565.84864449"
      *
-     * @var string
+     * @var float
      */
     public $amount;
 
     /**
      * Example: "0.02275907"
      *
-     * @var string
+     * @var float
      */
     public $total;
 
@@ -82,5 +87,50 @@ class TradeHistory extends AbstractResponse
         }
 
         $this->type = $type;
+    }
+
+    /**
+     * @internal
+     * @param int $globalTradeId
+     */
+    public function setGlobalTradeId(int $globalTradeId): void
+    {
+        $this->globalTradeId = $globalTradeId;
+    }
+
+    /**
+     * @internal
+     * @param int $tradeId
+     */
+    public function setTradeId(int $tradeId): void
+    {
+        $this->tradeId = $tradeId;
+    }
+
+    /**
+     * @internal
+     * @param float $rate
+     */
+    public function setRate(float $rate): void
+    {
+        $this->rate = $rate;
+    }
+
+    /**
+     * @internal
+     * @param float $amount
+     */
+    public function setAmount(float $amount): void
+    {
+        $this->amount = $amount;
+    }
+
+    /**
+     * @internal
+     * @param float $total
+     */
+    public function setTotal(float $total): void
+    {
+        $this->total = $total;
     }
 }

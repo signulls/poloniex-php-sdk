@@ -14,6 +14,11 @@ namespace Poloniex\NonceProvider;
 use Poloniex\ApiKey;
 use Predis\Client;
 
+/**
+ * Class RedisNonceProvider
+ *
+ * @author Grisha Chasovskih <chasovskihgrisha@gmail.com>
+ */
 class RedisNonceProvider implements NonceProviderInterface, IncreasingNonceInterface
 {
     private const MAIN_KEY = 'poloniex:nonce';

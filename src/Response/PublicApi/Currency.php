@@ -13,6 +13,11 @@ namespace Poloniex\Response\PublicApi;
 
 use Poloniex\Response\AbstractResponse;
 
+/**
+ * Class Currency
+ *
+ * @author Grisha Chasovskih <chasovskihgrisha@gmail.com>
+ */
 class Currency extends AbstractResponse
 {
     public const DEPOSIT_ADDRESS_POLONIEX_WALLET = 'poloniexwallet';
@@ -35,7 +40,7 @@ class Currency extends AbstractResponse
     /**
      * Example: "0.00500000"
      *
-     * @var string
+     * @var float
      */
     public $txFee;
 
@@ -68,6 +73,33 @@ class Currency extends AbstractResponse
      * @var bool
      */
     public $frozen;
+
+    /**
+     * @internal
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @internal
+     * @param float $txFee
+     */
+    public function setTxFee(float $txFee): void
+    {
+        $this->txFee = $txFee;
+    }
+
+    /**
+     * @internal
+     * @param int $minConf
+     */
+    public function setMinConf(int $minConf): void
+    {
+        $this->minConf = $minConf;
+    }
 
     /**
      * @internal

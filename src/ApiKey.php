@@ -12,9 +12,9 @@
 namespace Poloniex;
 
 /**
- * Class ApiKey
- *
  * To create new API keys please refer to the https://poloniex.com/apiKeys
+ *
+ * @author Grisha Chasovskih <chasovskihgrisha@gmail.com>
  */
 class ApiKey
 {

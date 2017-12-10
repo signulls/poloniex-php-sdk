@@ -13,6 +13,11 @@ namespace Poloniex\NonceProvider;
 
 use Poloniex\ApiKey;
 
+/**
+ * Class TimeDependedNonceProvider
+ *
+ * @author Grisha Chasovskih <chasovskihgrisha@gmail.com>
+ */
 class TimeDependedNonceProvider implements NonceProviderInterface
 {
     /**

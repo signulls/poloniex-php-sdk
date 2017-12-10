@@ -15,6 +15,11 @@ use Poloniex\PoloniexClient;
 use Poloniex\Exception\PoloniexException;
 use Symfony\Component\Serializer\{Serializer, SerializerAwareInterface, SerializerInterface};
 
+/**
+ * Class AbstractApi
+ *
+ * @author Grisha Chasovskih <chasovskihgrisha@gmail.com>
+ */
 abstract class AbstractApi implements ApiInterface, SerializerAwareInterface
 {
     use Traits\ResponseFactoryTrait;
@@ -54,6 +59,10 @@ abstract class AbstractApi implements ApiInterface, SerializerAwareInterface
      */
     public function request(string $command, array $params = []): array
     {
+        if (isset($params['currencyPair']) && $params['currencyPair'] !== 'all') {
+            $this->checkPair($params['currencyPair'], $command);
+        }
+
         $contents = $this->client
             ->request(
                 $this->getRequestMethod(),
@@ -67,6 +76,22 @@ abstract class AbstractApi implements ApiInterface, SerializerAwareInterface
         $this->throwExceptionIf(isset($response['error']), $response['error'] ?? 'Poloniex API unknown error.');
 
         return $response;
+    }
+
+    /**
+     * Check currency pair
+     *
+     * @param string $currencyPair
+     * @param string $command
+     */
+    final protected function checkPair(string $currencyPair, string $command)
+    {
+        $pair = explode('_', $currencyPair);
+
+        $this->throwExceptionIf(
+            $pair[0] === $pair[1],
+            sprintf('Unable to call "%s" with currency pair %s.', $command, $currencyPair)
+        );
     }
 
     /**

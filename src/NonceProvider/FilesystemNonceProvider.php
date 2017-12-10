@@ -13,6 +13,11 @@ namespace Poloniex\NonceProvider;
 
 use Poloniex\ApiKey;
 
+/**
+ * Class FilesystemNonceProvider
+ *
+ * @author Grisha Chasovskih <chasovskihgrisha@gmail.com>
+ */
 class FilesystemNonceProvider implements NonceProviderInterface, IncreasingNonceInterface
 {
     /**
@@ -56,6 +61,17 @@ class FilesystemNonceProvider implements NonceProviderInterface, IncreasingNonce
     }
 
     /**
+     * Generate specific filename for given ApiKey
+     *
+     * @param ApiKey $apiKey
+     * @return string
+     */
+    public function generateFilename(ApiKey $apiKey): string
+    {
+        return md5($apiKey->getApiKey());
+    }
+
+    /**
      * Check nonce file exists and if not then create file
      *
      * @param string $filename
@@ -63,18 +79,9 @@ class FilesystemNonceProvider implements NonceProviderInterface, IncreasingNonce
     protected function checkNonceFile(string $filename): void
     {
         if (!file_exists($filename)) {
-            file_put_contents($filename, 1);
+            $fp = fopen($filename, 'wb');
+            fwrite($fp, 1);
+            fclose($fp);
         }
-    }
-
-    /**
-     * Generate specific filename for given ApiKey
-     *
-     * @param ApiKey $apiKey
-     * @return string
-     */
-    protected function generateFilename(ApiKey $apiKey): string
-    {
-        return md5($apiKey->getApiKey());
     }
 }

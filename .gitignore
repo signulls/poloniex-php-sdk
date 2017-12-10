@@ -46,4 +46,4 @@
 /.web-server-pid
 
 vendor/
-/composer.lock
+composer.lock

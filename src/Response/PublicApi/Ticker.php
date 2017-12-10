@@ -13,6 +13,11 @@ namespace Poloniex\Response\PublicApi;
 
 use Poloniex\Response\AbstractResponse;
 
+/**
+ * Class Ticker
+ *
+ * @author Grisha Chasovskih <chasovskihgrisha@gmail.com>
+ */
 class Ticker extends AbstractResponse
 {
     /**
@@ -32,61 +37,160 @@ class Ticker extends AbstractResponse
     /**
      * Example: "0.00001356"
      *
-     * @var
+     * @var float
      */
     public $last;
 
     /**
      * "0.00001359"
      *
-     * @var string
+     * @var float
      */
     public $lowestAsk;
 
     /**
      * "0.00001356"
      *
-     * @var string
+     * @var float
      */
     public $highestBid;
 
     /**
      * "-0.05373342"
      *
-     * @var string
+     * @var float
      */
     public $percentChange;
 
     /**
      * "5.68453100"
      *
-     * @var string
+     * @var float
      */
     public $baseVolume;
 
     /**
      * "401407.79462359"
      *
-     * @var string
+     * @var float
      */
     public $quoteVolume;
 
     /**
-     * @var string
+     * @var bool
      */
     public $isFrozen;
 
     /**
      * "0.00001495"
      *
-     * @var string
+     * @var float
      */
     public $high24hr;
 
     /**
      * "0.00001356"
      *
-     * @var string
+     * @var float
      */
     public $low24hr;
+
+    /**
+     * @internal
+     * @param string $pair
+     */
+    public function setPair(string $pair): void
+    {
+        $this->pair = $pair;
+    }
+
+    /**
+     * @internal
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @internal
+     * @param float $last
+     */
+    public function setLast(float $last): void
+    {
+        $this->last = $last;
+    }
+
+    /**
+     * @internal
+     * @param float $lowestAsk
+     */
+    public function setLowestAsk(float $lowestAsk): void
+    {
+        $this->lowestAsk = $lowestAsk;
+    }
+
+    /**
+     * @internal
+     * @param float $highestBid
+     */
+    public function setHighestBid(float $highestBid): void
+    {
+        $this->highestBid = $highestBid;
+    }
+
+    /**
+     * @internal
+     * @param float $percentChange
+     */
+    public function setPercentChange(float $percentChange): void
+    {
+        $this->percentChange = $percentChange;
+    }
+
+    /**
+     * @internal
+     * @param float $baseVolume
+     */
+    public function setBaseVolume(float $baseVolume): void
+    {
+        $this->baseVolume = $baseVolume;
+    }
+
+    /**
+     * @internal
+     * @param float $quoteVolume
+     */
+    public function setQuoteVolume(float $quoteVolume): void
+    {
+        $this->quoteVolume = $quoteVolume;
+    }
+
+    /**
+     * @internal
+     * @param bool $isFrozen
+     */
+    public function setIsFrozen(bool $isFrozen): void
+    {
+        $this->isFrozen = $isFrozen;
+    }
+
+    /**
+     * @internal
+     * @param float $high24hr
+     */
+    public function setHigh24hr(float $high24hr): void
+    {
+        $this->high24hr = $high24hr;
+    }
+
+    /**
+     * @internal
+     * @param float $low24hr
+     */
+    public function setLow24hr(float $low24hr): void
+    {
+        $this->low24hr = $low24hr;
+    }
 }

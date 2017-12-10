@@ -11,6 +11,11 @@
 
 namespace Poloniex\CallHistory;
 
+/**
+ * Interface CallHistoryInterface
+ *
+ * @author Grisha Chasovskih <chasovskihgrisha@gmail.com>
+ */
 interface CallHistoryInterface
 {
     /**

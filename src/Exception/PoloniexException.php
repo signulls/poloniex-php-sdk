@@ -11,9 +11,23 @@
 
 namespace Poloniex\Exception;
 
+use Poloniex\Response\ErrorResponse;
 use Exception;
 
+/**
+ * Class PoloniexException
+ *
+ * @author Grisha Chasovskih <chasovskihgrisha@gmail.com>
+ */
 class PoloniexException extends Exception
 {
-
+    /**
+     * Get error response
+     *
+     * @return ErrorResponse
+     */
+    public function getErrorResponse(): ErrorResponse
+    {
+        return new ErrorResponse($this->getMessage());
+    }
 }

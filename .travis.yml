@@ -16,6 +16,7 @@ before_script:
     - chmod +x ./cc-test-reporter
     - ./cc-test-reporter before-build
     - composer self-update
+    - composer clear-cache
     - composer install --prefer-source --no-interaction
 
 script:

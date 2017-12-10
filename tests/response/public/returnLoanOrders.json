@@ -1,0 +1,318 @@
+{
+  "offers": [
+    {
+      "rate": "0.00004947",
+      "amount": "0.02950795",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005000",
+      "amount": "0.94309717",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005005",
+      "amount": "0.01009490",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005010",
+      "amount": "0.01009490",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005015",
+      "amount": "0.01009490",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005020",
+      "amount": "0.01009490",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005026",
+      "amount": "0.01009490",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005031",
+      "amount": "0.01009490",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005036",
+      "amount": "0.01009490",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005037",
+      "amount": "1.29277900",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005041",
+      "amount": "0.01009490",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005042",
+      "amount": "1.05928649",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005047",
+      "amount": "102.90157991",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005097",
+      "amount": "1.69905660",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005100",
+      "amount": "1.34936936",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005123",
+      "amount": "0.09038014",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005139",
+      "amount": "0.01213253",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005147",
+      "amount": "2.42834379",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005181",
+      "amount": "0.16097301",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005200",
+      "amount": "0.23670336",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005229",
+      "amount": "0.01140820",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005247",
+      "amount": "0.87946949",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005258",
+      "amount": "1.58704668",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005300",
+      "amount": "0.45046797",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005315",
+      "amount": "0.09592539",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005342",
+      "amount": "0.28963115",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005347",
+      "amount": "0.03788263",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005450",
+      "amount": "0.09592539",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005495",
+      "amount": "0.49295901",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005500",
+      "amount": "0.05297478",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005523",
+      "amount": "0.22023398",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005529",
+      "amount": "0.01000000",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005584",
+      "amount": "0.09592539",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005595",
+      "amount": "0.08957814",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005600",
+      "amount": "0.12119080",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005695",
+      "amount": "6.00513190",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005700",
+      "amount": "0.21733112",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005718",
+      "amount": "0.09592539",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005737",
+      "amount": "0.01000000",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005761",
+      "amount": "0.22023398",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005780",
+      "amount": "0.01282481",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005782",
+      "amount": "0.08000000",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005795",
+      "amount": "0.75797783",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005800",
+      "amount": "0.02519649",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005853",
+      "amount": "0.09592539",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005880",
+      "amount": "0.40991980",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005885",
+      "amount": "1.05657993",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005895",
+      "amount": "0.72760874",
+      "rangeMin": 2,
+      "rangeMax": 3
+    },
+    {
+      "rate": "0.00005900",
+      "amount": "1.84145161",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00005987",
+      "amount": "0.09592539",
+      "rangeMin": 2,
+      "rangeMax": 2
+    }
+  ],
+  "demands": [
+    {
+      "rate": "0.02000000",
+      "amount": "0.00000171",
+      "rangeMin": 2,
+      "rangeMax": 2
+    },
+    {
+      "rate": "0.00003700",
+      "amount": "6.53966850",
+      "rangeMin": 2,
+      "rangeMax": 2
+    }
+  ]
+}

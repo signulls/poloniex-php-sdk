@@ -1,0 +1,9 @@
+[
+  {
+    "data": {
+      "rate": "0.00311164",
+      "type": "ask"
+    },
+    "type": "orderBookRemove"
+  }
+]

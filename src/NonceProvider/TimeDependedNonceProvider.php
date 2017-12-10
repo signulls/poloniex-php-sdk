@@ -27,8 +27,8 @@ class TimeDependedNonceProvider implements NonceProviderInterface
      */
     public function get(ApiKey $apiKey): int
     {
-        $mt = explode(' ', microtime());
+        $time = explode(' ', microtime());
 
-        return $mt[1] . substr($mt[0], 2, 6);
+        return $time[1] . substr($time[0], 2, 6);
     }
 }

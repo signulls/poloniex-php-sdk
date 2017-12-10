@@ -159,7 +159,7 @@ class TradingApi extends AbstractApi
     public function returnDepositAddresses(): DepositAddresses
     {
         $depositAddresses = new DepositAddresses();
-        foreach ($this->request('returnDepositAddresses') as $coin => $address){
+        foreach ($this->request('returnDepositAddresses') as $coin => $address) {
             $depositAddresses->addresses[$coin] = $address;
         }
 
@@ -258,7 +258,7 @@ class TradingApi extends AbstractApi
      * @return TradeHistory[]
      */
     public function returnTradeHistory(
-        string $currencyPair ,
+        string $currencyPair,
         int $start = null,
         int $end = null,
         int $limit = null
@@ -328,7 +328,8 @@ class TradingApi extends AbstractApi
      * @param TradeRequest $tradeRequest
      * @return TradeResult
      */
-    public function buy(TradeRequest $tradeRequest): TradeResult {
+    public function buy(TradeRequest $tradeRequest): TradeResult
+    {
         return $this->tradeRequest('buy', $tradeRequest);
     }
 
@@ -338,7 +339,8 @@ class TradingApi extends AbstractApi
      * @param TradeRequest $tradeRequest
      * @return TradeResult
      */
-    public function sell(TradeRequest $tradeRequest): TradeResult {
+    public function sell(TradeRequest $tradeRequest): TradeResult
+    {
         return $this->tradeRequest('sell', $tradeRequest);
     }
 

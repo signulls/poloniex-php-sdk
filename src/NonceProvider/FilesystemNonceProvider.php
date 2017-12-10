@@ -79,9 +79,9 @@ class FilesystemNonceProvider implements NonceProviderInterface, IncreasingNonce
     protected function checkNonceFile(string $filename): void
     {
         if (!file_exists($filename)) {
-            $fp = fopen($filename, 'wb');
-            fwrite($fp, 1);
-            fclose($fp);
+            $file = fopen($filename, 'wb');
+            fwrite($file, 1);
+            fclose($file);
         }
     }
 }

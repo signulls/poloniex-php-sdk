@@ -1,0 +1,30 @@
+engines:
+  phpcodesniffer:
+    enabled: true
+    checks:
+      PSR2 Namespaces UseDeclaration MultipleDeclarations:
+        enabled: false
+      PSR2 Files EndFileNewline NoneFound:
+        enabled: false
+  phan:
+    enabled: false
+  phpmd:
+    enabled: true
+    checks:
+      Design/TooManyPublicMethods:
+        enabled: false
+      Design/WeightedMethodCount:
+        enabled: false
+      Design/CouplingBetweenObjects:
+        enabled: false
+      Naming/LongVariable:
+        enabled: false
+      Naming/ShortVariable:
+        enabled: false
+  sonar-php:
+    enabled: true
+    checks:
+      php:S1448:
+        enabled: false
+      php:S1192:
+        enabled: false

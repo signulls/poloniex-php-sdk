@@ -22,7 +22,7 @@ use Psr\Log\{LoggerAwareTrait, LoggerInterface};
  *       For instance, instead of XPM_BTC, use BTC_XPM
  *
  * @link   https://poloniex.com/support/api/
- * @author Grisha Chasovskih <chasovskihgrisha@gmail.com>       
+ * @author Grisha Chasovskih <chasovskihgrisha@gmail.com>
  */
 class PoloniexClient extends Client
 {

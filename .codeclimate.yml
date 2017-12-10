@@ -6,6 +6,8 @@ engines:
         enabled: false
       PSR2 Files EndFileNewline NoneFound:
         enabled: false
+      PSR2 Classes ClassDeclaration CloseBraceAfterBody:
+        enabled: false
   phan:
     enabled: false
   phpmd:
@@ -20,6 +22,8 @@ engines:
       Naming/LongVariable:
         enabled: false
       Naming/ShortVariable:
+        enabled: false
+      Design/TooManyMethods:
         enabled: false
   sonar-php:
     enabled: true

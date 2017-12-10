@@ -21,7 +21,6 @@ before_script:
     - composer update codacy/coverage --dev
 
 script:
-  - bundle exec rspec
   - vendor/bin/phpunit
 
 after_script:

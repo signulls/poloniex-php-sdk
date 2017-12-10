@@ -15,8 +15,29 @@ use GuzzleHttp\RequestOptions;
 use Poloniex\NonceProvider\{IncreasingNonceInterface, NonceProviderInterface};
 use Poloniex\{ApiKey, PoloniexClient, Response\SampleResponse};
 use Symfony\Component\Serializer\SerializerInterface;
+use Poloniex\Request\{CreateLoanOfferRequest, MoveOrderRequest, TradeRequest};
 use Poloniex\Response\TradingApi\{
-    AvailableAccountBalances, Balance, MoveOrder, TradeResult, CompleteBalance, DepositAddresses, DepositsWithdrawals, FeeInfo, ActiveLoans, CreateLoanOffer, LandingHistory, Loan, CloseMarginPosition, MarginPosition, MarginAccountSummary, MarginTrade, NewAddress, OpenOrder, OrderTrade, ResultingTrade, TradeHistory
+    AvailableAccountBalances,
+    Balance,
+    MoveOrder,
+    TradeResult,
+    CompleteBalance,
+    DepositAddresses,
+    DepositsWithdrawals,
+    FeeInfo,
+    ActiveLoans,
+    CreateLoanOffer,
+    LandingHistory,
+    Loan,
+    CloseMarginPosition,
+    MarginPosition,
+    MarginAccountSummary,
+    MarginTrade,
+    NewAddress,
+    OpenOrder,
+    OrderTrade,
+    ResultingTrade,
+    TradeHistory
 };
 
 /**
@@ -210,21 +231,15 @@ class TradingApi extends AbstractApi
      */
     public function returnAllOpenOrders()
     {
-        $response = $this->request('returnOpenOrders', ['currencyPair' => 'all']);
-
-        $openOrders = [];
-        foreach ($response as $pair => $orders) {
-            if (!\is_array($orders)) {
-                continue;
-            }
-
-
-            foreach ($orders as $openOrder) {
-                $openOrders[$pair][] = $this->factory(OpenOrder::class, $openOrder);
+        foreach ($this->request('returnOpenOrders', ['currencyPair' => 'all']) as $pair => $orders) {
+            if (\is_array($orders)) {
+                foreach ($orders as $openOrder) {
+                    $openOrders[$pair][] = $this->factory(OpenOrder::class, $openOrder);
+                }
             }
         }
 
-        return $openOrders;
+        return $openOrders ?? [];
     }
 
     /**
@@ -250,14 +265,12 @@ class TradingApi extends AbstractApi
     ): array {
 
         $this->throwExceptionIf($currencyPair === 'all', 'Please use TradingApi::returnAllTradeHistory() method');
-        $response = $this->request('returnTradeHistory', compact('currencyPair', 'start', 'end', 'limit'));
 
-        $tradeHistory = [];
-        foreach ($response as $history) {
+        foreach ($this->request('returnTradeHistory', compact('currencyPair', 'start', 'end', 'limit')) as $history) {
             $tradeHistory[] = $this->factory(TradeHistory::class, $history);
         }
 
-        return $tradeHistory;
+        return $tradeHistory ?? [];
     }
 
     /**
@@ -310,55 +323,23 @@ class TradingApi extends AbstractApi
     }
 
     /**
-     * @see static::buySell
+     * Places a buy order in a given market.
      *
-     * @param string $currencyPair
-     * @param string $rate
-     * @param string $amount
-     * @param int $fillOrKill
-     * @param int $immediateOrCancel
-     * @param int $postOnly
-     *
+     * @param TradeRequest $tradeRequest
      * @return TradeResult
      */
-    public function buy(
-        string $currencyPair,
-        string $rate,
-        string $amount,
-        int $fillOrKill = 0,
-        int $immediateOrCancel = 0,
-        int $postOnly = 0
-    ): TradeResult {
-        return $this->buySell('buy', compact(
-            'currencyPair', 'rate', 'amount', 'fillOrKill', 'immediateOrCancel', 'postOnly'
-        ));
+    public function buy(TradeRequest $tradeRequest): TradeResult {
+        return $this->tradeRequest('buy', $tradeRequest);
     }
 
     /**
-     * Places a sell order in a given market. Parameters and output are the same as for the buy method.
+     * Places a sell order in a given market.
      *
-     * @see static::buySell
-     *
-     * @param string $currencyPair
-     * @param string $rate
-     * @param string $amount
-     * @param int $fillOrKill
-     * @param int $immediateOrCancel
-     * @param int $postOnly
-     *
+     * @param TradeRequest $tradeRequest
      * @return TradeResult
      */
-    public function sell(
-        string $currencyPair,
-        string $rate,
-        string $amount,
-        int $fillOrKill = 0,
-        int $immediateOrCancel = 0,
-        int $postOnly = 0
-    ): TradeResult {
-        return $this->buySell('sell', compact(
-            'currencyPair', 'rate', 'amount', 'fillOrKill', 'immediateOrCancel', 'postOnly'
-        ));
+    public function sell(TradeRequest $tradeRequest): TradeResult {
+        return $this->tradeRequest('sell', $tradeRequest);
     }
 
     /**
@@ -385,26 +366,22 @@ class TradingApi extends AbstractApi
      * "postOnly" or "immediateOrCancel" may be specified for exchange orders,
      * but will have no effect on margin orders.
      *
-     * @param int $orderNumber
-     * @param string $rate
-     * @param string $amount
-     * @param int $postOnly
-     * @param int $immediateOrCancel
-     *
+     * @param MoveOrderRequest $moveOrderRequest
      * @return MoveOrder
      */
-    public function moveOrder(
-        int $orderNumber,
-        string $rate,
-        string $amount,
-        int $postOnly = 0,
-        int $immediateOrCancel = 0
-    ): MoveOrder {
+    public function moveOrder(MoveOrderRequest $moveOrderRequest): MoveOrder
+    {
+        foreach (['orderNumber', 'rate', 'amount'] as $requiredField) {
+            $this->throwExceptionIf(
+                $moveOrderRequest->{$requiredField} === null,
+                sprintf('Unable to send "moveOrder" request. Field "%s" should be set.', $requiredField)
+            );
+        }
 
         /** @var $moveOrder MoveOrder */
         $moveOrder = $this->factory(
             MoveOrder::class,
-            $this->request('moveOrder', compact('orderNumber', 'rate', 'amount', 'postOnly', 'immediateOrCancel'))
+            $this->request('moveOrder', get_object_vars($moveOrderRequest))
         );
 
         return $moveOrder;
@@ -508,8 +485,7 @@ class TradingApi extends AbstractApi
         float $amount,
         string $fromAccount,
         string $toAccount
-    ): SampleResponse
-    {
+    ): SampleResponse {
         /* @var $response SampleResponse */
         $response = $this->factory(
             SampleResponse::class,
@@ -622,26 +598,22 @@ class TradingApi extends AbstractApi
     /**
      * Creates a loan offer for a given currency.
      *
-     * @param string $currency
-     * @param float  $amount
-     * @param float  $duration
-     * @param int    $autoRenew 1 or 0
-     * @param float  $lendingRate
-     *
+     * @param CreateLoanOfferRequest $request
      * @return CreateLoanOffer
      */
-    public function createLoanOffer(
-        string $currency,
-        float $amount,
-        float $duration,
-        int $autoRenew,
-        float $lendingRate
-    ): CreateLoanOffer {
+    public function createLoanOffer(CreateLoanOfferRequest $request): CreateLoanOffer
+    {
+        foreach (get_object_vars($request) as $property => $value) {
+            $this->throwExceptionIf(
+                $value === null,
+                sprintf('Unable to send "moveOrder" request. Field "%s" should be set.', $property)
+            );
+        }
 
         /* @var $createLoanOffer CreateLoanOffer */
         $createLoanOffer = $this->factory(
             CreateLoanOffer::class,
-            $this->request('createLoanOffer', compact('currency', 'amount', 'duration', 'autoRenew', 'lendingRate'))
+            $this->request('createLoanOffer', get_object_vars($request))
         );
 
         return $createLoanOffer;
@@ -749,14 +721,20 @@ class TradingApi extends AbstractApi
      * you will never pay the taker fee on any part of the order that fills.
      *
      * @param string $command
-     * @param array $params
+     * @param TradeRequest $tradeRequest
      *
      * @return TradeResult
      */
-    protected function buySell(string $command, array $params): TradeResult
+    protected function tradeRequest(string $command, TradeRequest $tradeRequest): TradeResult
     {
-        $response = $this->request($command, $params);
+        foreach (['currencyPair', 'rate', 'amount'] as $requiredField) {
+            $this->throwExceptionIf(
+                $tradeRequest->{$requiredField} === null,
+                sprintf('Unable to send "%s" request. Field "%s" should be set.', $command, $requiredField)
+            );
+        }
 
+        $response = $this->request($command, get_object_vars($tradeRequest));
         $this->throwExceptionIf(!isset($response['orderNumber'], $response['resultingTrades']), 'Poloniex buy error.');
 
         $buySell = new TradeResult();

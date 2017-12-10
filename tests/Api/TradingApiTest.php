@@ -16,6 +16,9 @@ use Poloniex\Api\TradingApi;
 use Poloniex\ApiKey;
 use Poloniex\Exception\PoloniexException;
 use Poloniex\NonceProvider\FilesystemNonceProvider;
+use Poloniex\Request\CreateLoanOfferRequest;
+use Poloniex\Request\MoveOrderRequest;
+use Poloniex\Request\TradeRequest;
 use Poloniex\Response\SampleResponse;
 use Poloniex\Response\TradingApi\{
     ActiveLoans,
@@ -97,7 +100,12 @@ class TradingApiTest extends AbstractPoloniexTest
             $this->expectException($exception);
         }
 
-        $buy = $this->tradingApi->buy($currencyPair, $rate, $amount);
+        $tradeRequest = new TradeRequest();
+        $tradeRequest->currencyPair = $currencyPair;
+        $tradeRequest->rate = $rate;
+        $tradeRequest->amount = $amount;
+
+        $buy = $this->tradingApi->buy($tradeRequest);
 
         $this->assertInstanceOf(TradeResult::class, $buy);
         $this->assertSame($json['orderNumber'], $buy->orderNumber);
@@ -118,7 +126,12 @@ class TradingApiTest extends AbstractPoloniexTest
         $this->prepareApi('sell');
         $json = $this->getJsonResponse('sell');
 
-        $sell = $this->tradingApi->sell('VTC_RTG', 1.2, 3.4);
+        $tradeRequest = new TradeRequest();
+        $tradeRequest->currencyPair = 'VTC_RTG';
+        $tradeRequest->rate = 1.2;
+        $tradeRequest->amount = 3.4;
+
+        $sell = $this->tradingApi->sell($tradeRequest);
 
         $this->assertInstanceOf(TradeResult::class, $sell);
         $this->assertSame($json['orderNumber'], $sell->orderNumber);
@@ -305,7 +318,13 @@ class TradingApiTest extends AbstractPoloniexTest
     public function testMoveOrder()
     {
         $this->prepareApi('moveOrder');
-        $this->checkResponse('moveOrder', $this->tradingApi->moveOrder(1, 2, 3), MoveOrder::class);
+
+        $moveOrderRequest = new MoveOrderRequest();
+        $moveOrderRequest->orderNumber = 1;
+        $moveOrderRequest->rate = 2;
+        $moveOrderRequest->amount = 3;
+
+        $this->checkResponse('moveOrder', $this->tradingApi->moveOrder($moveOrderRequest), MoveOrder::class);
     }
 
     /**
@@ -476,9 +495,17 @@ class TradingApiTest extends AbstractPoloniexTest
     public function testCreateLoanOffer()
     {
         $this->prepareApi('createLoanOffer');
+
+        $request = new CreateLoanOfferRequest();
+        $request->amount = 10;
+        $request->currency = 'BTC_ETH';
+        $request->duration = 23;
+        $request->autoRenew = 1;
+        $request->lendingRate = 1.3;
+
         $this->checkResponse(
             'createLoanOffer',
-            $this->tradingApi->createLoanOffer('BTC_ETH', 12.3, 4.56, 1, 7.8910),
+            $this->tradingApi->createLoanOffer($request),
             CreateLoanOffer::class
         );
     }

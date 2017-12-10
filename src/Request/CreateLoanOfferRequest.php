@@ -19,6 +19,8 @@ namespace Poloniex\Request;
 class CreateLoanOfferRequest implements RequestInterface
 {
     /**
+     * 3-digit currency code
+     *
      * @var string
      */
     public $currency;

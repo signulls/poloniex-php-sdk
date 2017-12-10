@@ -8,6 +8,8 @@ engines:
         enabled: false
       PSR2 Classes ClassDeclaration CloseBraceAfterBody:
         enabled: false
+      PSR2 Methods FunctionClosingBrace SpacingBeforeClose:
+        enabled: false
   phan:
     enabled: false
   phpmd:

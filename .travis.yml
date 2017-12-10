@@ -17,10 +17,13 @@ before_script:
     - ./cc-test-reporter before-build
     - composer self-update
     - composer clear-cache
-    - composer install --prefer-source --no-interaction
+    - composer install --dev --prefer-source --no-interaction
+    - composer update codacy/coverage --dev
 
 script:
+  - bundle exec rspec
   - vendor/bin/phpunit
 
 after_script:
+  - if [ -f vendor/bin/codacycoverage ] ; then php vendor/bin/codacycoverage clover || true ; fi
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT

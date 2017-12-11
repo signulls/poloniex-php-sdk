@@ -1,42 +1,71 @@
-## Welcome to GitHub Pages
+## Poloniex PHP API Client
 
 [![Build Status](https://travis-ci.org/signulls/poloniex-php-sdk.svg?branch=master)](https://travis-ci.org/signulls/poloniex-php-sdk)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/e0c433d80a734031ac74c1867c9aeba1)](https://www.codacy.com/app/Signulls/poloniex-php-sdk?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=signulls/poloniex-php-sdk&amp;utm_campaign=Badge_Grade)
 [![Maintainability](https://api.codeclimate.com/v1/badges/8d6540373ac975c83ccb/maintainability)](https://codeclimate.com/github/signulls/poloniex-php-sdk/maintainability)
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/e0c433d80a734031ac74c1867c9aeba1)](https://www.codacy.com/app/Signulls/poloniex-php-sdk?utm_source=github.com&utm_medium=referral&utm_content=signulls/poloniex-php-sdk&utm_campaign=Badge_Coverage)
+[![License](https://poser.pugx.org/signulls/poloniex-php-sdk/license)](https://packagist.org/packages/signulls/poloniex-php-sdk)
 
-You can use the [editor on GitHub](https://github.com/signulls/poloniex-php-sdk/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+![logo](http://www.obzorbtc.com/wp-content/uploads/2015/12/Poloniex-logo-800px.png) 
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+This repository provides PHP client for Poloniex API.
 
-### Markdown
+### Donate
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+I gave for you a nice library for communication between your PHP project and Poloniex API. So, I will be so happy if you send me some coins for beer :)
 
+- **BTC**: 12HmN3pjD6AsN1rX4EQ1FXZDbHpeXyt7u9
+- **ETH**: 0xe18b26070cc692e8086ea169d9b3dff35a53f92c
+
+### Prerequisites
+
+- PHP 7.1 or later
+- Redis (for tracking your requests to Poloniex API Endpoint)
+
+### Installation
+
+Setup this repository with Composer, just add the following to your composer.json:
 ```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+    "require": {
+        "signulls/poloniex-php-sdk": "^1.0"
+    }
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+Or, of course, you can use command line like a boss:
+```markdown
+composer require signulls/poloniex-php-sdk
+```
+This library is available on [Packagist](https://packagist.org/packages/signulls/poloniex-php-sdk).
 
-### Jekyll Themes
+## Basic usage
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/signulls/poloniex-php-sdk/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+**Create Poloniex client**
+```markdown
+$logger = new Logger(); // Symfony based logger
+$callHistoryManager = new RedisCallHistory($redis); // or any other implementation of CallHistoryInterface
+$poloniexClient = new PoloniexClient($callHistoryManager, $logger);
+```
 
-### Support or Contact
+**Make calls to public API**
+```markdown
+$serializer = new Serializer(); // Symfony based serializer
+$publicApi = new PublicApi($poloniexClient, $serializer);
+$ticker = $publicApi->returnTicker();
+```
+**Make calls to Trade API**
+```markdown
+$nonceProvider = new RedisNonceProvider(); // or any other implementation of NonceProviderInterface
+$tradingApi = new TradingApi($poloniexClient, $serializer, $nonceProvider);
+$tradingApi->setApiKey(new ApiKey('key', 'secret'));
+$balances = $tradingApi->returnBalances();
+```
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+## Versioning
+
+For transparency into our release cycle and in striving to maintain backward compatibility, project is maintained under [the Semantic Versioning guidelines](http://semver.org/).
+Sometimes we screw up, but we'll adhere to those rules whenever possible.
+
+## Creator
+
+**Chasovskih Grisha**
+<chasovskihgrisha@gmail.com>

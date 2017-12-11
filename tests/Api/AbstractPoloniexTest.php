@@ -6,7 +6,7 @@
  * file that was distributed with this source code.
  *
  * @copyright 2017-2018 Chasovskih Grisha <chasovskihgrisha@gmail.com>
- * @license   http://www.opensource.org/licenses/mit-license.php MIT
+ * @license https://github.com/signulls/poloniex-php-sdk/blob/master/LICENSE MIT
  */
 
 namespace Poloniex\Tests\Api;
@@ -43,7 +43,7 @@ abstract class AbstractPoloniexTest extends TestCase
         $callHistory->shouldReceive('create')->andReturn();
         $callHistory->shouldReceive('isIncreased')->andReturn(false);
 
-        $this->poloniexClient = new PoloniexClient(new NullLogger(), $callHistory);
+        $this->poloniexClient = new PoloniexClient($callHistory, new NullLogger());
     }
 
     /**

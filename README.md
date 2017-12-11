@@ -43,7 +43,7 @@ This library is available on [Packagist](https://packagist.org/packages/signulls
 ```markdown
 $logger = new Logger(); // Symfony based logger
 $callHistoryManager = new RedisCallHistory($redis); // or any other implementation of CallHistoryInterface
-$poloniexClient = new PoloniexClient($logger, $callHistoryManager);
+$poloniexClient = new PoloniexClient($callHistoryManager, $logger);
 ```
 
 **Make calls to public API**

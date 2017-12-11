@@ -6,7 +6,7 @@
  * file that was distributed with this source code.
  *
  * @copyright 2017-2018 Chasovskih Grisha <chasovskihgrisha@gmail.com>
- * @license   http://www.opensource.org/licenses/mit-license.php MIT
+ * @license https://github.com/signulls/poloniex-php-sdk/blob/master/LICENSE MIT
  */
 
 namespace Poloniex;
@@ -41,19 +41,21 @@ class PoloniexClient extends Client
     /**
      * PoloniexClient constructor.
      *
-     * @param LoggerInterface      $logger
      * @param CallHistoryInterface $callHistory
+     * @param LoggerInterface      $logger
      * @param int                  $timeout
      * @param string               $baseUri
      */
     public function __construct(
-        LoggerInterface $logger,
         CallHistoryInterface $callHistory,
+        LoggerInterface $logger = null,
         int $timeout = 5,
         string $baseUri = self::BASE_URI
     ) {
-        $this->setLogger($logger);
         $this->callHistory = $callHistory;
+        if ($logger !== null) {
+            $this->setLogger($logger);
+        }
 
         parent::__construct([
             'base_uri'        => $baseUri,
@@ -68,13 +70,13 @@ class PoloniexClient extends Client
     public function request($method, $uri = '', array $options = [])
     {
         if ($this->callHistory->isIncreased()) {
-            $this->logger->warning('Limit increased. Sleep for 1 second.');
+            $this->log('warning', 'Limit increased. Sleep for 1 second.');
             sleep(1);
         }
 
         $this->callHistory->create();
         $method = strtoupper($method);
-        $this->logger->debug(sprintf('Send %s request to %s', $method, $this->getConfig('base_uri') . $uri), $options);
+        $this->log('debug', sprintf('Send %s request to %s', $method, $this->getConfig('base_uri') . $uri), $options);
 
         return parent::request(strtoupper($method), $uri, $options);
     }
@@ -87,5 +89,19 @@ class PoloniexClient extends Client
     public function isInaccessible(): bool
     {
         return $this->get('/')->getStatusCode() !== 200;
+    }
+
+    /**
+     * Log message
+     *
+     * @param string $level
+     * @param string $message
+     * @param array  $context
+     */
+    public function log(string $level, string $message, array $context = []): void
+    {
+        if ($this->logger !== null) {
+            $this->logger->log($level, $message, $context);
+        }
     }
 }

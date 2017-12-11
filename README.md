@@ -6,6 +6,8 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/e0c433d80a734031ac74c1867c9aeba1)](https://www.codacy.com/app/Signulls/poloniex-php-sdk?utm_source=github.com&utm_medium=referral&utm_content=signulls/poloniex-php-sdk&utm_campaign=Badge_Coverage)
 [![License](https://poser.pugx.org/signulls/poloniex-php-sdk/license)](https://packagist.org/packages/signulls/poloniex-php-sdk)
 
+![logo](http://www.obzorbtc.com/wp-content/uploads/2015/12/Poloniex-logo-800px.png) 
+
 This repository provides PHP client for Poloniex API.
 
 ### Donate

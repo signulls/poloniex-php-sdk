@@ -7,7 +7,6 @@
 [![License](https://poser.pugx.org/signulls/poloniex-php-sdk/license)](https://packagist.org/packages/signulls/poloniex-php-sdk)
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/signulls/poloniex-php-sdk/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/signulls/poloniex-php-sdk/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/signulls/poloniex-php-sdk/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/signulls/poloniex-php-sdk/?branch=master)
 [![Build Status](https://scrutinizer-ci.com/g/signulls/poloniex-php-sdk/badges/build.png?b=master)](https://scrutinizer-ci.com/g/signulls/poloniex-php-sdk/build-status/master)
 [![Code Intelligence Status](https://scrutinizer-ci.com/g/signulls/poloniex-php-sdk/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)
 

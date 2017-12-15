@@ -19,5 +19,3 @@ script:
 
 after_script:
   - vendor/bin/codacycoverage clover ./build/logs/clover.xml
-  - wget https://scrutinizer-ci.com/ocular.phar
-  - php ocular.phar code-coverage:upload --format=xml ./build/logs/clover.xml

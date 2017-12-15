@@ -47,7 +47,7 @@ class PoloniexClient extends Client
      * @param string               $baseUri
      */
     public function __construct(
-        CallHistoryInterface $callHistory,
+        CallHistoryInterface $callHistory = null,
         LoggerInterface $logger = null,
         int $timeout = 5,
         string $baseUri = self::BASE_URI
@@ -69,16 +69,18 @@ class PoloniexClient extends Client
      */
     public function request($method, $uri = '', array $options = [])
     {
-        if ($this->callHistory->isIncreased()) {
-            $this->log('warning', 'Limit increased. Sleep for 1 second.');
-            sleep(1);
+        if ($this->callHistory !== null) {
+            if ($this->callHistory->isIncreased()) {
+                $this->log('warning', 'Limit increased. Sleep for 1 second.');
+                sleep(1);
+            }
+
+            $this->callHistory->create();
         }
 
-        $this->callHistory->create();
-        $method = strtoupper($method);
         $this->log('debug', sprintf('Send %s request to %s', $method, $this->getConfig('base_uri') . $uri), $options);
 
-        return parent::request(strtoupper($method), $uri, $options);
+        return parent::request($method, $uri, $options);
     }
 
     /**

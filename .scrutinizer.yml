@@ -1,0 +1,14 @@
+checks:
+    php: true
+build:
+    tests:
+        override:
+            -
+                command: 'vendor/bin/phpunit --coverage-clover=some-file'
+                coverage:
+                    file: 'some-file'
+                    format: 'clover'
+tools:
+    external_code_coverage:
+        timeout: 600    # Timeout in seconds.
+        runs: 2         # Scrutinizer will wait for two code coverage submissions

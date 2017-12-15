@@ -4,10 +4,10 @@ build:
     tests:
         override:
             -
-                command: 'vendor/bin/phpunit --coverage-clover=some-file'
+                command: 'vendor/bin/phpunit --coverage-clover=./build/logs/clover'
                 coverage:
-                    file: 'some-file'
-                    format: 'clover'
+                    file: './build/logs/clover'
+                    format: 'xml'
 tools:
     external_code_coverage:
         timeout: 600    # Timeout in seconds.

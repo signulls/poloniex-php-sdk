@@ -14,6 +14,11 @@ namespace Poloniex;
 use Poloniex\Api\{PublicApi, TradingApi};
 use Poloniex\Exception\PoloniexException;
 
+/**
+ * Class PoloniexManager
+ *
+ * @author Grisha Chasovskih <chasovskihgrisha@gmail.com>
+ */
 final class PoloniexManager
 {
     /**
@@ -41,39 +46,34 @@ final class PoloniexManager
     /**
      * Get total balance for given currency
      *
-     * @param ApiKey $apiKey
-     * @param string $currency
+     * @param ApiKey $apiKey   User credentials
+     * @param string $currency Any available currency at market (DOGE, LTC, ETH, USDT, XMR etc..)
      *
      * @return float
+     * @throws PoloniexException
      */
     public function getBalance(ApiKey $apiKey, string $currency = 'BTC'): float
     {
         $currency = strtoupper($currency);
         $this->tradingApi->setApiKey($apiKey);
         $completeBalances = $this->tradingApi->returnCompleteBalances();
-        $ticker = $currency !== 'BTC' ? $this->publicApi->returnTicker() : null;
-
         $balance = 0;
 
         foreach ($completeBalances as $coin => $completeBalance) {
-            if ($currency === 'BTC') {
-                $balance += $completeBalance->btcValue;
+            $balance += $completeBalance->btcValue;
+        }
 
-                continue;
-            }
+        if ($currency !== 'BTC') {
+            $ticker = $this->publicApi->returnTicker();
+            $btcCoin = 'BTC_' . $currency;
+            $coinBtc = $currency . '_BTC';
 
-            $pair = $currency . '_' . strtoupper($coin);
-
-            if (!isset($ticker[$pair])) {
+            if (isset($ticker[$coinBtc])) {
+                $balance *= $ticker[$coinBtc]->last;
+            } elseif (isset($ticker[$btcCoin])) {
+                $balance /= $ticker[$btcCoin]->last;
+            } else {
                 throw new PoloniexException(sprintf('Invalid currency given: %s', $currency));
-            }
-
-            if ($completeBalance->available > 0) {
-                $balance += $completeBalance->available * $ticker[$pair]->last;
-            }
-
-            if ($completeBalance->onOrders > 0) {
-                $balance += $completeBalance->onOrders * $ticker[$pair]->last;
             }
         }
 

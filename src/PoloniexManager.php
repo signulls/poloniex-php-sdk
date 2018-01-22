@@ -100,7 +100,7 @@ final class PoloniexManager
     }
 
     /**
-     * Get asks
+     * Get asks for given trade pair
      *
      * @param string $pair
      *
@@ -119,7 +119,7 @@ final class PoloniexManager
     }
 
     /**
-     * Get lowest ask
+     * Get lowest ask for given trade pair
      *
      * @param string $pair
      *

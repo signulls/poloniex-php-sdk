@@ -76,7 +76,6 @@ class TradingApiTest extends AbstractPoloniexTest
         );
 
         $this->tradingApi->setApiKey(new ApiKey('api-key', 'api-secret'));
-
     }
 
     /**

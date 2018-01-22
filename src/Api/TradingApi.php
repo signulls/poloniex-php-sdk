@@ -109,11 +109,17 @@ class TradingApi extends AbstractApi
     }
 
     /**
+     * Set Api key
+     *
      * @param ApiKey $apiKey
+     *
+     * @return TradingApi
      */
-    public function setApiKey(ApiKey $apiKey)
+    public function setApiKey(ApiKey $apiKey): self
     {
         $this->apiKey = $apiKey;
+
+        return $this;
     }
 
     /**

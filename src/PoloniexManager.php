@@ -55,8 +55,7 @@ final class PoloniexManager
     public function getBalance(ApiKey $apiKey, string $currency = 'BTC'): float
     {
         $currency = strtoupper($currency);
-        $this->tradingApi->setApiKey($apiKey);
-        $completeBalances = $this->tradingApi->returnCompleteBalances();
+        $completeBalances = $this->tradingApi->setApiKey($apiKey)->returnCompleteBalances();
         $balance = 0;
 
         foreach ($completeBalances as $coin => $completeBalance) {
@@ -78,5 +77,87 @@ final class PoloniexManager
         }
 
         return $balance;
+    }
+
+    /**
+     * Get available balance for given coin.
+     * You can use available balance for trades.
+     *
+     * @param ApiKey $apiKey
+     * @param string $coin
+     *
+     * @return float|null
+     */
+    public function getAvailableBalance(ApiKey $apiKey, string $coin):? float
+    {
+        $balances = $this->tradingApi->setApiKey($apiKey)->returnCompleteBalances();
+
+        if (!isset($balances[$coin])) {
+            throw new PoloniexException(sprintf('Invalid coin given: %s', $coin));
+        }
+
+        return $balances[$coin]->available;
+    }
+
+    /**
+     * Get asks for given trade pair
+     *
+     * @param string $pair
+     *
+     * @return float[] Keys are prices and values are amount of trades
+     */
+    public function asks(string $pair): array
+    {
+        $asks = [];
+        foreach ($this->publicApi->returnOrderBook($pair)->asks as $ask) {
+            $asks[$ask[0]] = $ask[1];
+        }
+
+        ksort($asks);
+
+        return $asks;
+    }
+
+    /**
+     * Get lowest ask for given trade pair
+     *
+     * @param string $pair
+     *
+     * @return float
+     */
+    public function getLowestAsk(string $pair): float
+    {
+        return min(array_keys($this->asks($pair)));
+    }
+
+    /**
+     * Get bids
+     *
+     * @param string $pair
+     *
+     * @return float[] Keys are prices and values are amount of trades
+     */
+    public function bids(string $pair): array
+    {
+        $bids = [];
+        foreach ($this->publicApi->returnOrderBook($pair)->bids as $bid) {
+            $bids[$bid[0]] = $bid[1];
+        }
+
+        ksort($bids);
+
+        return $bids;
+    }
+
+    /**
+     * Get highest bid
+     *
+     * @param string $pair
+     *
+     * @return float
+     */
+    public function getHighestBid(string $pair): float
+    {
+        return max(array_keys($this->bids($pair)));
     }
 }

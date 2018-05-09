@@ -379,7 +379,7 @@ class TradingApi extends AbstractApi
      */
     public function moveOrder(MoveOrderRequest $moveOrderRequest): MoveOrder
     {
-        foreach (['orderNumber', 'rate', 'amount'] as $requiredField) {
+        foreach (['orderNumber', 'rate'] as $requiredField) {
             $this->throwExceptionIf(
                 $moveOrderRequest->{$requiredField} === null,
                 sprintf('Unable to send "moveOrder" request. Field "%s" should be set.', $requiredField)

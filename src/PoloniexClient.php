@@ -13,7 +13,7 @@ namespace Poloniex;
 
 use GuzzleHttp\Client;
 use Poloniex\CallHistory\CallHistoryInterface;
-use Psr\Log\{LoggerAwareTrait, LoggerInterface};
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class PoloniexClient
@@ -26,8 +26,6 @@ use Psr\Log\{LoggerAwareTrait, LoggerInterface};
  */
 class PoloniexClient extends Client
 {
-    use LoggerAwareTrait;
-
     /**
      * Base url for poloniex api requests
      */
@@ -39,27 +37,29 @@ class PoloniexClient extends Client
     private $callHistory;
 
     /**
+     * Timeout in seconds
+     *
+     * @var int
+     */
+    private $timeout;
+
+    /**
      * PoloniexClient constructor.
      *
      * @param CallHistoryInterface $callHistory
-     * @param LoggerInterface      $logger
-     * @param int                  $timeout
      * @param string               $baseUri
+     * @param int                  $timeout
      */
     public function __construct(
         CallHistoryInterface $callHistory = null,
-        LoggerInterface $logger = null,
-        int $timeout = 5,
-        string $baseUri = self::BASE_URI
+        string $baseUri = self::BASE_URI,
+        int $timeout = 0
     ) {
         $this->callHistory = $callHistory;
-        if ($logger !== null) {
-            $this->setLogger($logger);
-        }
+        $this->timeout = $timeout;
 
         parent::__construct([
-            'base_uri'        => $baseUri,
-            'timeout'         => $timeout,
+            'base_uri' => $baseUri,
             'allow_redirects' => false,
         ]);
     }
@@ -67,20 +67,17 @@ class PoloniexClient extends Client
     /**
      * {@inheritdoc}
      */
-    public function request($method, $uri = '', array $options = [])
+    public function request($method, $uri = '', array $options = []): ResponseInterface
     {
         if ($this->callHistory !== null) {
             if ($this->callHistory->isIncreased()) {
-                $this->log('warning', 'Limit increased. Sleep for 1 second.');
                 sleep(1);
             }
 
             $this->callHistory->create();
         }
 
-        $this->log('debug', sprintf('Send %s request to %s', $method, $this->getConfig('base_uri') . $uri), $options);
-
-        return parent::request($method, $uri, $options);
+        return parent::request($method, $uri, array_merge(['timeout' => $this->timeout], $options));
     }
 
     /**
@@ -91,19 +88,5 @@ class PoloniexClient extends Client
     public function isInaccessible(): bool
     {
         return $this->get('/')->getStatusCode() !== 200;
-    }
-
-    /**
-     * Log message
-     *
-     * @param string $level
-     * @param string $message
-     * @param array  $context
-     */
-    public function log(string $level, string $message, array $context = []): void
-    {
-        if ($this->logger !== null) {
-            $this->logger->log($level, $message, $context);
-        }
     }
 }

@@ -23,19 +23,14 @@ use Poloniex\Response\SampleResponse;
 use Poloniex\Response\TradingApi\{
     ActiveLoans,
     AvailableAccountBalances,
-    Balance,
-    CloseMarginPosition,
     CreateLoanOffer,
     FeeInfo,
     LandingHistory,
     Loan,
     MarginAccountSummary,
     MarginPosition,
-    MarginTrade,
     MoveOrder,
-    TradeResult,
     CompleteBalance,
-    DepositAddresses,
     DepositsWithdrawals,
     NewAddress,
     OpenOrder,
@@ -91,7 +86,7 @@ class TradingApiTest extends AbstractPoloniexTest
         string $rate,
         string $amount,
         string $exception = null
-    ) {
+    ): void {
         $this->prepareApi('buy');
         $json = $this->getJsonResponse('buy');
 
@@ -106,7 +101,6 @@ class TradingApiTest extends AbstractPoloniexTest
 
         $buy = $this->tradingApi->buy($tradeRequest);
 
-        $this->assertInstanceOf(TradeResult::class, $buy);
         $this->assertSame($json['orderNumber'], $buy->orderNumber);
 
         $resultingTrades = $json['resultingTrades'] ?? [];
@@ -120,7 +114,7 @@ class TradingApiTest extends AbstractPoloniexTest
     /**
      * Test sell
      */
-    public function testSell()
+    public function testSell(): void
     {
         $this->prepareApi('sell');
         $json = $this->getJsonResponse('sell');
@@ -132,7 +126,6 @@ class TradingApiTest extends AbstractPoloniexTest
 
         $sell = $this->tradingApi->sell($tradeRequest);
 
-        $this->assertInstanceOf(TradeResult::class, $sell);
         $this->assertSame($json['orderNumber'], $sell->orderNumber);
 
         $resultingTrades = $json['resultingTrades'] ?? [];
@@ -157,12 +150,12 @@ class TradingApiTest extends AbstractPoloniexTest
     /**
      * Test return balances
      */
-    public function testReturnBalances()
+    public function testReturnBalances(): void
     {
         $json = $this->getJsonResponse('returnBalances');
         $this->prepareApi('returnBalances');
         $balance = $this->tradingApi->returnBalances();
-        $this->assertInstanceOf(Balance::class, $balance);
+
         foreach ($json as $currency => $expected) {
             $this->assertEquals($expected, $balance->currencies[$currency]);
         }
@@ -171,7 +164,7 @@ class TradingApiTest extends AbstractPoloniexTest
     /**
      *  Test returnCompleteBalances
      */
-    public function testReturnCompleteBalances()
+    public function testReturnCompleteBalances(): void
     {
         $this->prepareApi('returnCompleteBalances');
         $this->checkCollectionResponse(
@@ -184,12 +177,12 @@ class TradingApiTest extends AbstractPoloniexTest
     /**
      * Test returnDepositAddresses
      */
-    public function testReturnDepositAddresses()
+    public function testReturnDepositAddresses(): void
     {
         $json = $this->getJsonResponse('returnDepositAddresses');
         $this->prepareApi('returnDepositAddresses');
         $depositAddresses = $this->tradingApi->returnDepositAddresses();
-        $this->assertInstanceOf(DepositAddresses::class, $depositAddresses);
+
         foreach ($json as $currency => $expected) {
             $this->assertEquals($expected, $depositAddresses->addresses[$currency]);
         }
@@ -198,7 +191,7 @@ class TradingApiTest extends AbstractPoloniexTest
     /**
      * Test generate new address
      */
-    public function testGenerateNewAddress()
+    public function testGenerateNewAddress(): void
     {
         $this->prepareApi('generateNewAddress');
         $this->checkResponse('generateNewAddress', $this->tradingApi->generateNewAddress('BTC'), NewAddress::class);
@@ -207,7 +200,7 @@ class TradingApiTest extends AbstractPoloniexTest
     /**
      *  Test return deposits withdrawals
      */
-    public function testReturnDepositsWithdrawals()
+    public function testReturnDepositsWithdrawals(): void
     {
         $this->prepareApi('returnDepositsWithdrawals');
         $this->checkResponse(
@@ -221,7 +214,7 @@ class TradingApiTest extends AbstractPoloniexTest
     /**
      * Test return open orders
      */
-    public function testReturnOpenOrders()
+    public function testReturnOpenOrders(): void
     {
         $this->prepareApi('returnOpenOrders');
         $this->checkCollectionResponse(
@@ -234,7 +227,7 @@ class TradingApiTest extends AbstractPoloniexTest
     /**
      * Test return open orders
      */
-    public function testReturnAllOpenOrders()
+    public function testReturnAllOpenOrders(): void
     {
         $this->prepareApi('returnAllOpenOrders');
         $json = $this->getJsonResponse('returnAllOpenOrders');
@@ -255,7 +248,7 @@ class TradingApiTest extends AbstractPoloniexTest
     /**
      * Test return trade history
      */
-    public function testReturnTradeHistory()
+    public function testReturnTradeHistory(): void
     {
         $this->prepareApi('returnTradeHistory');
         $this->checkCollectionResponse(
@@ -268,7 +261,7 @@ class TradingApiTest extends AbstractPoloniexTest
     /**
      * Test return all trade history
      */
-    public function testReturnAllTradeHistory()
+    public function testReturnAllTradeHistory(): void
     {
         $this->prepareApi('returnAllTradeHistory');
         $json = $this->getJsonResponse('returnAllTradeHistory');
@@ -289,7 +282,7 @@ class TradingApiTest extends AbstractPoloniexTest
     /**
      * Test return order trades
      */
-    public function testReturnOrderTrades()
+    public function testReturnOrderTrades(): void
     {
         $this->prepareApi('returnOrderTrades');
 
@@ -303,7 +296,7 @@ class TradingApiTest extends AbstractPoloniexTest
     /**
      * Test cancel order
      */
-    public function testCancelOrder()
+    public function testCancelOrder(): void
     {
         $this->prepareApi('cancelOrder');
         $success = $this->tradingApi->cancelOrder(123);
@@ -314,7 +307,7 @@ class TradingApiTest extends AbstractPoloniexTest
     /**
      * Test move order
      */
-    public function testMoveOrder()
+    public function testMoveOrder(): void
     {
         $this->prepareApi('moveOrder');
 
@@ -329,7 +322,7 @@ class TradingApiTest extends AbstractPoloniexTest
     /**
      * Test withdraw
      */
-    public function testWithdraw()
+    public function testWithdraw(): void
     {
         $this->prepareApi('withdraw');
         $json = $this->getJsonResponse('withdraw');
@@ -341,7 +334,7 @@ class TradingApiTest extends AbstractPoloniexTest
     /**
      * Test return fee info
      */
-    public function testReturnFeeInfo()
+    public function testReturnFeeInfo(): void
     {
         $this->prepareApi('returnFeeInfo');
         $this->checkResponse('returnFeeInfo', $this->tradingApi->returnFeeInfo(), FeeInfo::class);
@@ -350,7 +343,7 @@ class TradingApiTest extends AbstractPoloniexTest
     /**
      * Test return available account balances
      */
-    public function testReturnAvailableAccountBalances()
+    public function testReturnAvailableAccountBalances(): void
     {
         $this->prepareApi('returnAvailableAccountBalances');
         $this->checkResponse(
@@ -363,7 +356,7 @@ class TradingApiTest extends AbstractPoloniexTest
     /**
      * Test return tradable balances
      */
-    public function testReturnTradableBalances()
+    public function testReturnTradableBalances(): void
     {
         $this->prepareApi('returnTradableBalances');
         $this->assertSame(
@@ -375,7 +368,7 @@ class TradingApiTest extends AbstractPoloniexTest
     /**
      * Test transfer balance
      */
-    public function testTransferBalance()
+    public function testTransferBalance(): void
     {
         $this->prepareApi('transferBalance');
         $this->checkResponse(
@@ -388,7 +381,7 @@ class TradingApiTest extends AbstractPoloniexTest
     /**
      * Test return margin account summary
      */
-    public function testReturnMarginAccountSummary()
+    public function testReturnMarginAccountSummary(): void
     {
         $this->prepareApi('returnMarginAccountSummary');
         $this->checkResponse(
@@ -401,13 +394,12 @@ class TradingApiTest extends AbstractPoloniexTest
     /**
      * Test margin buy
      */
-    public function testMarginBuy()
+    public function testMarginBuy(): void
     {
         $this->prepareApi('marginBuy');
         $json = $this->getJsonResponse('marginBuy');
         $marginTrade = $this->tradingApi->marginBuy('BTC_ETH', 14.88, 4);
 
-        $this->assertInstanceOf(MarginTrade::class, $marginTrade);
         $this->assertSame($json['success'], $marginTrade->success);
         $this->assertSame($json['message'], $marginTrade->message);
         $this->assertSame((int) $json['orderNumber'], $marginTrade->orderNumber);
@@ -426,13 +418,12 @@ class TradingApiTest extends AbstractPoloniexTest
     /**
      * Test margin buy
      */
-    public function testMarginSell()
+    public function testMarginSell(): void
     {
         $this->prepareApi('marginSell');
         $json = $this->getJsonResponse('marginSell');
         $marginTrade = $this->tradingApi->marginSell('BTC_ETH', 14.88, 4);
 
-        $this->assertInstanceOf(MarginTrade::class, $marginTrade);
         $this->assertSame($json['success'], $marginTrade->success);
         $this->assertSame($json['message'], $marginTrade->message);
         $this->assertSame((int) $json['orderNumber'], $marginTrade->orderNumber);
@@ -451,7 +442,7 @@ class TradingApiTest extends AbstractPoloniexTest
     /**
      * Test get margin position
      */
-    public function testGetMarginPosition()
+    public function testGetMarginPosition(): void
     {
         $this->prepareApi('getMarginPosition');
         $this->checkResponse(
@@ -464,13 +455,12 @@ class TradingApiTest extends AbstractPoloniexTest
     /**
      * Test close margin position
      */
-    public function testCloseMarginPosition()
+    public function testCloseMarginPosition(): void
     {
         $this->prepareApi('closeMarginPosition');
         $json = $this->getJsonResponse('closeMarginPosition');
         $closeMarginPosition = $this->tradingApi->closeMarginPosition('BTC_ETH');
 
-        $this->assertInstanceOf(CloseMarginPosition::class, $closeMarginPosition);
         $this->assertSame((bool) $json['success'], $closeMarginPosition->success);
         $this->assertSame($json['message'], $closeMarginPosition->message);
         $resultingTrades = $json['resultingTrades'] ?? [];
@@ -491,7 +481,7 @@ class TradingApiTest extends AbstractPoloniexTest
     /**
      * Test create loan order
      */
-    public function testCreateLoanOffer()
+    public function testCreateLoanOffer(): void
     {
         $this->prepareApi('createLoanOffer');
 
@@ -512,7 +502,7 @@ class TradingApiTest extends AbstractPoloniexTest
     /**
      * Test cancel loan offer
      */
-    public function testCancelLoanOffer()
+    public function testCancelLoanOffer(): void
     {
         $this->prepareApi('cancelLoanOffer');
         $this->checkResponse(
@@ -525,7 +515,7 @@ class TradingApiTest extends AbstractPoloniexTest
     /**
      * Test return open loan offers
      */
-    public function testReturnOpenLoanOffers()
+    public function testReturnOpenLoanOffers(): void
     {
         $this->prepareApi('returnOpenLoanOffers');
         $json = $this->getJsonResponse('returnOpenLoanOffers');
@@ -543,7 +533,7 @@ class TradingApiTest extends AbstractPoloniexTest
     /**
      * Test return active loans
      */
-    public function testReturnActiveLoans()
+    public function testReturnActiveLoans(): void
     {
         $this->prepareApi('returnActiveLoans');
         $this->checkResponse(
@@ -556,7 +546,7 @@ class TradingApiTest extends AbstractPoloniexTest
     /**
      * Test return lending history
      */
-    public function testReturnLendingHistory()
+    public function testReturnLendingHistory(): void
     {
         $this->prepareApi('returnLendingHistory');
         $this->checkCollectionResponse(
@@ -569,7 +559,7 @@ class TradingApiTest extends AbstractPoloniexTest
     /**
      * Test toggle auto renew
      */
-    public function testToggleAutoRenew()
+    public function testToggleAutoRenew(): void
     {
         $this->prepareApi('toggleAutoRenew');
         $this->checkResponse(

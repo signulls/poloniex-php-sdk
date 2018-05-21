@@ -119,18 +119,6 @@ final class PoloniexManager
     }
 
     /**
-     * Get lowest ask for given trade pair
-     *
-     * @param string $pair
-     *
-     * @return float
-     */
-    public function getLowestAsk(string $pair): float
-    {
-        return min(array_keys($this->asks($pair)));
-    }
-
-    /**
      * Get bids
      *
      * @param string $pair
@@ -147,17 +135,5 @@ final class PoloniexManager
         ksort($bids);
 
         return $bids;
-    }
-
-    /**
-     * Get highest bid
-     *
-     * @param string $pair
-     *
-     * @return float
-     */
-    public function getHighestBid(string $pair): float
-    {
-        return max(array_keys($this->bids($pair)));
     }
 }

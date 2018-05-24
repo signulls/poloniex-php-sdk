@@ -45,9 +45,9 @@ This library is available on [Packagist](https://packagist.org/packages/signulls
 
 **Create Poloniex client**
 ```markdown
-$logger = new Logger(); // Symfony based logger
-$callHistoryManager = new RedisCallHistory($redis); // or any other implementation of CallHistoryInterface
-$poloniexClient = new PoloniexClient($callHistoryManager, $logger);
+ // or any other implementation of CallHistoryInterface
+$callHistoryManager = new RedisCallHistory($redis);
+$poloniexClient = new PoloniexClient($callHistoryManager);
 ```
 
 **Make calls to public API**
@@ -58,7 +58,8 @@ $ticker = $publicApi->returnTicker();
 ```
 **Make calls to Trade API**
 ```markdown
-$nonceProvider = new RedisNonceProvider(); // or any other implementation of NonceProviderInterface
+// or any other implementation of NonceProviderInterface
+$nonceProvider = new RedisNonceProvider(); 
 $tradingApi = new TradingApi($poloniexClient, $serializer, $nonceProvider);
 $tradingApi->setApiKey(new ApiKey('key', 'secret'));
 $balances = $tradingApi->returnBalances();

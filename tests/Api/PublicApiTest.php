@@ -14,7 +14,6 @@ namespace Poloniex\Tests\Api;
 use Poloniex\Api\PublicApi;
 use Poloniex\Response\PublicApi\{
     ChartData,
-    DayVolume,
     Ticker,
     Currency,
     LoanOrders,
@@ -39,7 +38,7 @@ class PublicApiTest extends AbstractPoloniexTest
     /**
      * Test ticker
      */
-    public function testTicker()
+    public function testTicker(): void
     {
         $this->prepareApi('returnTicker');
         $this->checkCollectionResponse('returnTicker', $this->publicApi->returnTicker(), Ticker::class);
@@ -50,7 +49,7 @@ class PublicApiTest extends AbstractPoloniexTest
      *
      * @param string $currencyPair
      */
-    public function testTradeHistory(string $currencyPair)
+    public function testTradeHistory(string $currencyPair): void
     {
         $this->prepareApi('returnTradeHistory');
         $this->checkCollectionResponse(
@@ -63,7 +62,7 @@ class PublicApiTest extends AbstractPoloniexTest
     /**
      * Test order book
      */
-    public function testOrderBook()
+    public function testOrderBook(): void
     {
         $this->prepareApi('returnOrderBook');
         $this->checkResponse('returnOrderBook', $this->publicApi->returnOrderBook('BTC_NXT'), OrderBook::class);
@@ -72,7 +71,7 @@ class PublicApiTest extends AbstractPoloniexTest
     /**
      * Test all order book
      */
-    public function testAllOrderBook()
+    public function testAllOrderBook(): void
     {
         $this->prepareApi('returnOrderBookAll');
         $this->checkCollectionResponse('returnOrderBookAll', $this->publicApi->returnAllOrderBook(), OrderBook::class);
@@ -81,7 +80,7 @@ class PublicApiTest extends AbstractPoloniexTest
     /**
      * Test currencies
      */
-    public function testsCurrencies()
+    public function testsCurrencies(): void
     {
         $this->prepareApi('returnCurrencies');
         $this->checkCollectionResponse('returnCurrencies', $this->publicApi->returnCurrencies(), Currency::class);
@@ -95,7 +94,7 @@ class PublicApiTest extends AbstractPoloniexTest
      * @param $end
      * @param $period
      */
-    public function testsChartData($currencyPair, $start, $end, $period)
+    public function testsChartData($currencyPair, $start, $end, $period): void
     {
         $this->prepareApi('returnChartData');
         $this->checkCollectionResponse(
@@ -110,7 +109,7 @@ class PublicApiTest extends AbstractPoloniexTest
      *
      * @param string $currency
      */
-    public function testLoanOrders(string $currency)
+    public function testLoanOrders(string $currency): void
     {
         $this->prepareApi('returnLoanOrders');
         $this->checkResponse('returnLoanOrders', $this->publicApi->returnLoanOrders($currency), LoanOrders::class);
@@ -119,13 +118,11 @@ class PublicApiTest extends AbstractPoloniexTest
     /**
      * Test 24h volume
      */
-    public function testDayVolume()
+    public function testDayVolume(): void
     {
         $json = $this->getJsonResponse('return24hVolume');
         $this->prepareApi('return24hVolume');
         $dayVolume = $this->publicApi->return24hVolume();
-
-        $this->assertInstanceOf(DayVolume::class, $dayVolume);
 
         foreach ($json as $key => $value) {
             if (strpos($key, 'total') !== false) {

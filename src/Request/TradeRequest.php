@@ -18,6 +18,13 @@ namespace Poloniex\Request;
  */
 class TradeRequest implements RequestInterface
 {
+    public const MIN_TOTAL = [
+        'BTC' => 0.0001,
+        'XMR' => 0.0001,
+        'ETH' => 0.0001,
+        'USDT' => 1,
+    ];
+
     /**
      * @var string
      */

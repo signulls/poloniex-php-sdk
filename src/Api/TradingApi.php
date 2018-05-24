@@ -11,9 +11,10 @@
 
 namespace Poloniex\Api;
 
+use function is_array;
 use GuzzleHttp\RequestOptions;
 use Poloniex\NonceProvider\{IncreasingNonceInterface, NonceProviderInterface};
-use Poloniex\{ApiKey, PoloniexClient, Response\SampleResponse};
+use Poloniex\{ApiKey, Exception\TotalDeficiencyException, PoloniexClient, Response\SampleResponse};
 use Symfony\Component\Serializer\SerializerInterface;
 use Poloniex\Request\{CreateLoanOfferRequest, MoveOrderRequest, TradeRequest};
 use Poloniex\Response\TradingApi\{
@@ -105,7 +106,10 @@ class TradingApi extends AbstractApi
             ],
         ];
 
-        return parent::request($command, $params);
+        $response = parent::request($command, $params);
+        $this->apiKey = null;
+
+        return $response;
     }
 
     /**
@@ -235,10 +239,10 @@ class TradingApi extends AbstractApi
      *
      * OpenOrder[][]
      */
-    public function returnAllOpenOrders()
+    public function returnAllOpenOrders(): array
     {
         foreach ($this->request('returnOpenOrders', ['currencyPair' => 'all']) as $pair => $orders) {
-            if (\is_array($orders)) {
+            if (is_array($orders)) {
                 foreach ($orders as $openOrder) {
                     $openOrders[$pair][] = $this->factory(OpenOrder::class, $openOrder);
                 }
@@ -300,7 +304,7 @@ class TradingApi extends AbstractApi
         $response = $this->request('returnTradeHistory', compact('currencyPair', 'start', 'end', 'limit'));
 
         foreach ($response as $pair => $histories) {
-            if (\is_array($histories) && !empty($histories)) {
+            if (is_array($histories) && !empty($histories)) {
                 foreach ($histories as $history) {
                     $tradeHistory[$pair][] = $this->factory(TradeHistory::class, $history);
                 }
@@ -379,7 +383,7 @@ class TradingApi extends AbstractApi
      */
     public function moveOrder(MoveOrderRequest $moveOrderRequest): MoveOrder
     {
-        foreach (['orderNumber', 'rate', 'amount'] as $requiredField) {
+        foreach (['orderNumber', 'rate'] as $requiredField) {
             $this->throwExceptionIf(
                 $moveOrderRequest->{$requiredField} === null,
                 sprintf('Unable to send "moveOrder" request. Field "%s" should be set.', $requiredField)
@@ -740,6 +744,13 @@ class TradingApi extends AbstractApi
                 $tradeRequest->{$requiredField} === null,
                 sprintf('Unable to send "%s" request. Field "%s" should be set.', $command, $requiredField)
             );
+        }
+
+        $coin = strtoupper(explode('_', $tradeRequest->currencyPair)[0]);
+        $total = $tradeRequest->amount * $tradeRequest->rate;
+
+        if (isset(TradeRequest::MIN_TOTAL[$coin]) && TradeRequest::MIN_TOTAL[$coin] > $total) {
+            throw new TotalDeficiencyException(TradeRequest::MIN_TOTAL[$coin], $coin);
         }
 
         $response = $this->request($command, get_object_vars($tradeRequest));

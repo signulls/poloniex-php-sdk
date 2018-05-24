@@ -11,13 +11,13 @@
 
 namespace Poloniex\Tests\Api;
 
+use Mockery;
+use function is_bool;
 use GuzzleHttp\Psr7\Response;
 use PHPUnit\Framework\TestCase;
 use Poloniex\CallHistory\RedisCallHistory;
 use Poloniex\PoloniexClient;
 use Poloniex\Response\ResponseInterface;
-use Psr\Log\NullLogger;
-use Mockery;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
@@ -43,7 +43,7 @@ abstract class AbstractPoloniexTest extends TestCase
         $callHistory->shouldReceive('create')->andReturn();
         $callHistory->shouldReceive('isIncreased')->andReturn(false);
 
-        $this->poloniexClient = new PoloniexClient($callHistory, new NullLogger());
+        $this->poloniexClient = new PoloniexClient($callHistory);
     }
 
     /**
@@ -51,7 +51,7 @@ abstract class AbstractPoloniexTest extends TestCase
      *
      * @param string $command
      */
-    protected function mockPoloniexClient(string $command)
+    protected function mockPoloniexClient(string $command): void
     {
         $this->poloniexClient = Mockery::mock($this->poloniexClient)
             ->shouldReceive('request')
@@ -64,7 +64,7 @@ abstract class AbstractPoloniexTest extends TestCase
      * @param ResponseInterface $response
      * @param string            $className
      */
-    protected function checkResponse(string $command, ResponseInterface $response, string $className)
+    protected function checkResponse(string $command, ResponseInterface $response, string $className): void
     {
         $this->assertInstanceOf($className, $response);
         $this->checkDataResponse($this->getJsonResponse($command), $response);
@@ -75,7 +75,7 @@ abstract class AbstractPoloniexTest extends TestCase
      * @param ResponseInterface[] $responses
      * @param string              $className
      */
-    protected function checkCollectionResponse(string $command, array $responses, string $className)
+    protected function checkCollectionResponse(string $command, array $responses, string $className): void
     {
         $json = $this->getJsonResponse($command);
 
@@ -90,7 +90,7 @@ abstract class AbstractPoloniexTest extends TestCase
      * @param array             $json
      * @param ResponseInterface $response
      */
-    protected function checkDataResponse(array $json, ResponseInterface $response)
+    protected function checkDataResponse(array $json, ResponseInterface $response): void
     {
         foreach ($json as $field => $expected) {
 
@@ -110,7 +110,7 @@ abstract class AbstractPoloniexTest extends TestCase
                     : $response->{$field};
             }
 
-            if (\is_bool($actual)) {
+            if (is_bool($actual)) {
                 $expected = (bool) $expected;
             }
 

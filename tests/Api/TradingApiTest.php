@@ -16,9 +16,7 @@ use Poloniex\Api\TradingApi;
 use Poloniex\ApiKey;
 use Poloniex\Exception\PoloniexException;
 use Poloniex\NonceProvider\FilesystemNonceProvider;
-use Poloniex\Request\CreateLoanOfferRequest;
-use Poloniex\Request\MoveOrderRequest;
-use Poloniex\Request\TradeRequest;
+use Poloniex\Request\{CreateLoanOfferRequest, MoveOrderRequest, TradeRequest};
 use Poloniex\Response\SampleResponse;
 use Poloniex\Response\TradingApi\{
     ActiveLoans,

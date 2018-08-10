@@ -11,11 +11,9 @@
 
 namespace Poloniex\Tests\Api;
 
-use Mockery;
 use Poloniex\Api\TradingApi;
 use Poloniex\ApiKey;
 use Poloniex\Exception\PoloniexException;
-use Poloniex\NonceProvider\FilesystemNonceProvider;
 use Poloniex\Request\{CreateLoanOfferRequest, MoveOrderRequest, TradeRequest};
 use Poloniex\Response\SampleResponse;
 use Poloniex\Response\TradingApi\{
@@ -58,14 +56,9 @@ class TradingApiTest extends AbstractPoloniexTest
     {
         parent::setUp();
 
-        $nonceProvider = Mockery::mock(new FilesystemNonceProvider('tests/data'));
-        $nonceProvider->shouldReceive('get')->andReturn(1);
-        $nonceProvider ->shouldReceive('increase')->andReturns();
-
         $this->tradingApi = new TradingApi(
             $this->poloniexClient,
-            $this->getSerializer(),
-            $nonceProvider
+            $this->getSerializer()
         );
 
         $this->tradingApi->setApiKey(new ApiKey('api-key', 'api-secret'));
@@ -574,14 +567,9 @@ class TradingApiTest extends AbstractPoloniexTest
     {
         $this->mockPoloniexClient($command);
 
-        $nonceProvider = Mockery::mock(new FilesystemNonceProvider('tests/data'));
-        $nonceProvider->shouldReceive('get')->andReturn(1);
-        $nonceProvider->shouldReceive('increase')->andReturns();
-
         $this->tradingApi = new TradingApi(
             $this->poloniexClient,
-            $this->getSerializer(),
-            $nonceProvider
+            $this->getSerializer()
         );
 
         $this->tradingApi->setApiKey(new ApiKey('api-key', 'api-secret'));

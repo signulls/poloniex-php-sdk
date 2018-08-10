@@ -21,8 +21,6 @@ use DateTime;
  */
 class RedisCallHistory implements CallHistoryInterface
 {
-    private const MAIN_KEY = 'poloniex:calls';
-
     /**
      * Client class used for connecting and executing commands on Redis.
      *
@@ -38,6 +36,11 @@ class RedisCallHistory implements CallHistoryInterface
     protected $expireTime;
 
     /**
+     * @var string
+     */
+    private $ip;
+
+    /**
      * RedisCallHistory constructor.
      *
      * @param Client $client
@@ -45,6 +48,7 @@ class RedisCallHistory implements CallHistoryInterface
      */
     public function __construct(Client $client, string $expireTime = '1 hour')
     {
+        $this->ip = gethostbyname(gethostname());
         $this->expireTime = $expireTime;
         $this->redisClient = $client;
     }
@@ -54,8 +58,8 @@ class RedisCallHistory implements CallHistoryInterface
      */
     public function create(): void
     {
-        $this->redisClient->hincrby(self::MAIN_KEY, $this->getTime(), 1);
-        $this->redisClient->expireat(self::MAIN_KEY, strtotime('+' . $this->expireTime));
+        $this->redisClient->hincrby($this->getKey(), $this->getTime(), 1);
+        $this->redisClient->expireat($this->getKey(), strtotime('+' . $this->expireTime));
     }
 
     /**
@@ -63,7 +67,7 @@ class RedisCallHistory implements CallHistoryInterface
      */
     public function isIncreased(): bool
     {
-        return $this->redisClient->hget(self::MAIN_KEY, $this->getTime()) >= self::CALLS_PER_SECOND;
+        return $this->redisClient->hget($this->getKey(), $this->getTime()) >= self::CALLS_PER_SECOND;
     }
 
     /**
@@ -74,5 +78,15 @@ class RedisCallHistory implements CallHistoryInterface
     private function getTime(): string
     {
         return (new DateTime())->format('Y:m:d:H:i:s');
+    }
+
+    /**
+     * Get key
+     *
+     * @return string
+     */
+    private function getKey(): string
+    {
+        return 'poloniex:calls:' . $this->ip;
     }
 }

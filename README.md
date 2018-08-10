@@ -58,9 +58,7 @@ $ticker = $publicApi->returnTicker();
 ```
 **Make calls to Trade API**
 ```markdown
-// or any other implementation of NonceProviderInterface
-$nonceProvider = new RedisNonceProvider(); 
-$tradingApi = new TradingApi($poloniexClient, $serializer, $nonceProvider);
+$tradingApi = new TradingApi($poloniexClient, $serializer);
 $tradingApi->setApiKey(new ApiKey('key', 'secret'));
 $balances = $tradingApi->returnBalances();
 ```

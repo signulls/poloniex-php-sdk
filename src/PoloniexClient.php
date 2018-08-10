@@ -11,7 +11,7 @@
 
 namespace Poloniex;
 
-use GuzzleHttp\Client;
+use GuzzleHttp\{Client, RequestOptions};
 use Poloniex\CallHistory\CallHistoryInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -26,11 +26,6 @@ use Psr\Http\Message\ResponseInterface;
  */
 class PoloniexClient extends Client
 {
-    /**
-     * Base url for poloniex api requests
-     */
-    public const BASE_URI = 'https://poloniex.com/';
-
     /**
      * @var CallHistoryInterface
      */
@@ -47,20 +42,23 @@ class PoloniexClient extends Client
      * PoloniexClient constructor.
      *
      * @param CallHistoryInterface $callHistory
-     * @param string               $baseUri
-     * @param int                  $timeout
+     * @param string $baseUri
+     * @param int $timeout
+     * @param string|null $proxy
      */
     public function __construct(
-        CallHistoryInterface $callHistory = null,
-        string $baseUri = self::BASE_URI,
-        int $timeout = 0
+        CallHistoryInterface $callHistory,
+        string $baseUri = 'https://poloniex.com/',
+        int $timeout = 0,
+        string $proxy = null
     ) {
         $this->callHistory = $callHistory;
         $this->timeout = $timeout;
 
         parent::__construct([
             'base_uri' => $baseUri,
-            'allow_redirects' => false,
+            RequestOptions::ALLOW_REDIRECTS => false,
+            RequestOptions::PROXY => $proxy,
         ]);
     }
 
@@ -69,15 +67,19 @@ class PoloniexClient extends Client
      */
     public function request($method, $uri = '', array $options = []): ResponseInterface
     {
-        if ($this->callHistory !== null) {
-            if ($this->callHistory->isIncreased()) {
+        $wait = false;
+
+        do {
+            if ($wait) {
                 sleep(1);
             }
+            $wait = true;
+        } while ($this->callHistory->isIncreased());
 
-            $this->callHistory->create();
-        }
+        $response = parent::request($method, $uri, array_merge(['timeout' => $this->timeout], $options));
+        $this->callHistory->create();
 
-        return parent::request($method, $uri, array_merge(['timeout' => $this->timeout], $options));
+        return $response;
     }
 
     /**

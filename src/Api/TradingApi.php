@@ -13,9 +13,7 @@ namespace Poloniex\Api;
 
 use function is_array;
 use GuzzleHttp\RequestOptions;
-use Poloniex\NonceProvider\{IncreasingNonceInterface, NonceProviderInterface};
-use Poloniex\{ApiKey, Exception\TotalDeficiencyException, PoloniexClient, Response\SampleResponse};
-use Symfony\Component\Serializer\SerializerInterface;
+use Poloniex\{ApiKey, Exception\TotalDeficiencyException, Response\SampleResponse};
 use Poloniex\Request\{CreateLoanOfferRequest, MoveOrderRequest, TradeRequest};
 use Poloniex\Response\TradingApi\{
     AvailableAccountBalances,
@@ -63,39 +61,13 @@ class TradingApi extends AbstractApi
     private $apiKey;
 
     /**
-     * @var NonceProviderInterface
-     */
-    private $nonceProvider;
-
-    /**
-     * TradingApi constructor.
-     *
-     * @param PoloniexClient         $client
-     * @param SerializerInterface    $serializer
-     * @param NonceProviderInterface $nonceProvider
-     */
-    public function __construct(
-        PoloniexClient $client,
-        SerializerInterface $serializer,
-        NonceProviderInterface $nonceProvider
-    ) {
-        $this->nonceProvider = $nonceProvider;
-
-        parent::__construct($client, $serializer);
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function request(string $command, array $params = []): array
     {
         $this->throwExceptionIf($this->apiKey === null, 'You need to set ApiKey to make trade request');
-        $params = array_merge($params, ['nonce' => $this->nonceProvider->get($this->apiKey), 'command' => $command]);
+        $params = array_merge($params, ['nonce' => $this->getNonce(), 'command' => $command]);
         $data = http_build_query($params, '', '&');
-
-        if ($this->nonceProvider instanceof IncreasingNonceInterface) {
-            $this->nonceProvider->increase($this->apiKey);
-        }
 
         $this->options = [
             RequestOptions::FORM_PARAMS => $params,
@@ -808,5 +780,16 @@ class TradingApi extends AbstractApi
     protected function getRequestUri(): string
     {
         return 'tradingApi';
+    }
+
+    /**
+     * The nonce parameter is an integer which must always be greater than the previous nonce used.
+     * Generate a nonce to avoid problems with 32bit systems
+     */
+    public function getNonce(): int
+    {
+        $time = explode(' ', microtime());
+
+        return $time[1] . substr($time[0], 2, 6);
     }
 }

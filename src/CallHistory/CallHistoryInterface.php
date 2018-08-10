@@ -22,7 +22,7 @@ interface CallHistoryInterface
      * Please note that making more than 6 calls per second to the public API, or repeatedly and needlessly
      * fetching excessive amounts of data, can result in your IP being banned.
      */
-    public const CALLS_PER_SECOND = 6;
+    public const CALLS_PER_SECOND = 5;
 
     /**
      * Create history record

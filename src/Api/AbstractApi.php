@@ -11,6 +11,7 @@
 
 namespace Poloniex\Api;
 
+use GuzzleHttp\RequestOptions;
 use Poloniex\PoloniexClient;
 use Poloniex\Exception\PoloniexException;
 use Symfony\Component\Serializer\{Serializer, SerializerAwareInterface, SerializerInterface};
@@ -23,6 +24,13 @@ use Symfony\Component\Serializer\{Serializer, SerializerAwareInterface, Serializ
 abstract class AbstractApi implements ApiInterface, SerializerAwareInterface
 {
     use Traits\ResponseFactoryTrait;
+
+    /**
+     * Proxy address
+     *
+     * @var string
+     */
+    protected $proxy;
 
     /**
      * @var PoloniexClient
@@ -49,6 +57,16 @@ abstract class AbstractApi implements ApiInterface, SerializerAwareInterface
     }
 
     /**
+     * Set proxy
+     *
+     * @param string $proxy
+     */
+    public function setProxy(string $proxy): void
+    {
+        $this->proxy = $proxy;
+    }
+
+    /**
      * Call request
      *
      * @param string $command
@@ -63,6 +81,10 @@ abstract class AbstractApi implements ApiInterface, SerializerAwareInterface
             $this->checkPair($params['currencyPair'], $command);
         }
 
+        if ($this->proxy !== null) {
+            $this->options[RequestOptions::PROXY] = $this->proxy;
+        }
+
         $contents = $this->client
             ->request(
                 $this->getRequestMethod(),
@@ -72,6 +94,7 @@ abstract class AbstractApi implements ApiInterface, SerializerAwareInterface
             ->getBody()
             ->getContents();
 
+        $this->proxy = null;
         $response = json_decode($contents ?: '{}', true) ?: [];
         $this->throwExceptionIf(isset($response['error']), $response['error'] ?? 'Poloniex API unknown error.');
 

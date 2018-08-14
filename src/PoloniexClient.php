@@ -76,10 +76,9 @@ class PoloniexClient extends Client
             $wait = true;
         } while ($this->callHistory->isIncreased());
 
-        $response = parent::request($method, $uri, array_merge(['timeout' => $this->timeout], $options));
         $this->callHistory->create();
 
-        return $response;
+        return parent::request($method, $uri, array_merge(['timeout' => $this->timeout], $options));
     }
 
     /**

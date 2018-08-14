@@ -28,7 +28,7 @@ abstract class AbstractApi implements ApiInterface, SerializerAwareInterface
     /**
      * Proxy address
      *
-     * @var string
+     * @var string|null
      */
     protected $proxy;
 
@@ -59,9 +59,9 @@ abstract class AbstractApi implements ApiInterface, SerializerAwareInterface
     /**
      * Set proxy
      *
-     * @param string $proxy
+     * @param string|null $proxy
      */
-    public function setProxy(string $proxy): void
+    public function setProxy(string $proxy = null): void
     {
         $this->proxy = $proxy;
     }

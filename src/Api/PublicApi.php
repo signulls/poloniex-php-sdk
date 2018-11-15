@@ -217,16 +217,9 @@ class PublicApi extends AbstractApi
     /**
      * {@inheritdoc}
      */
-    protected function getRequestMethod(): string
+    protected function setup(): void
     {
-        return 'GET';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function getRequestUri(): string
-    {
-        return 'public';
+        $this->method = 'GET';
+        $this->uri = 'public';
     }
 }

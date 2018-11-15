@@ -18,7 +18,7 @@ namespace Poloniex\CallHistory;
  */
 interface CallHistoryInterface
 {
-    /**
+    /**s
      * Please note that making more than 6 calls per second to the public API, or repeatedly and needlessly
      * fetching excessive amounts of data, can result in your IP being banned.
      */
@@ -26,13 +26,16 @@ interface CallHistoryInterface
 
     /**
      * Create history record
+     *
+     * @param string|null $proxy
      */
-    public function create(): void;
+    public function create(string $proxy = null): void;
 
     /**
      * Check whether limit per second is increased
      *
+     * @param string|null $proxy
      * @return bool
      */
-    public function isIncreased(): bool;
+    public function isIncreased(string $proxy = null): bool;
 }

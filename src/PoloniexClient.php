@@ -68,15 +68,16 @@ class PoloniexClient extends Client
     public function request($method, $uri = '', array $options = []): ResponseInterface
     {
         $wait = false;
+        $proxy = $options[RequestOptions::PROXY] ?? $this->getConfig(RequestOptions::PROXY) ?: null;
 
         do {
             if ($wait) {
                 sleep(1);
             }
             $wait = true;
-        } while ($this->callHistory->isIncreased());
+        } while ($this->callHistory->isIncreased($proxy));
 
-        $this->callHistory->create();
+        $this->callHistory->create($proxy);
 
         return parent::request($method, $uri, array_merge(['timeout' => $this->timeout], $options));
     }

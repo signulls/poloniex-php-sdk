@@ -807,22 +807,6 @@ class TradingApi extends AbstractApi
     }
 
     /**
-     * {@inheritdoc}
-     */
-    protected function getRequestMethod(): string
-    {
-        return 'POST';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function getRequestUri(): string
-    {
-        return 'tradingApi';
-    }
-
-    /**
      * The nonce parameter is an integer which must always be greater than the previous nonce used.
      * Generate a nonce to avoid problems with 32bit systems
      */
@@ -831,5 +815,14 @@ class TradingApi extends AbstractApi
         $time = explode(' ', microtime());
 
         return $time[1] . substr($time[0], 2, 6);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function setup(): void
+    {
+        $this->method = 'POST';
+        $this->uri = 'tradingApi';
     }
 }

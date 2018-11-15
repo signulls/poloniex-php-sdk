@@ -357,7 +357,7 @@ class TradingApi extends AbstractApi
         $this->throwExceptionIf((int) $response['success'] === 0, $message);
         $this->throwExceptionIf(!isset($response['result'][$orderNumber]), $message);
 
-        /** @var $orderStatus OrderStatus */
+        /* @var $orderStatus OrderStatus */
         $orderStatus = $this->factory(
             OrderStatus::class,
             $response['result'][$orderNumber]

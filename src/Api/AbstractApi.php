@@ -43,6 +43,20 @@ abstract class AbstractApi implements ApiInterface, SerializerAwareInterface
     protected $options = [];
 
     /**
+     * Request method
+     *
+     * @var string
+     */
+    protected $method;
+
+    /**
+     * Request uri
+     *
+     * @var string
+     */
+    protected $uri;
+
+    /**
      * AbstractApi constructor.
      *
      * @param PoloniexClient                 $client
@@ -54,6 +68,8 @@ abstract class AbstractApi implements ApiInterface, SerializerAwareInterface
     ) {
         $this->setSerializer($serializer);
         $this->client = $client;
+
+        $this->setup();
     }
 
     /**
@@ -86,11 +102,7 @@ abstract class AbstractApi implements ApiInterface, SerializerAwareInterface
         }
 
         $contents = $this->client
-            ->request(
-                $this->getRequestMethod(),
-                $this->getRequestUri(),
-                $this->options
-            )
+            ->request($this->method, $this->uri, $this->options)
             ->getBody()
             ->getContents();
 
@@ -118,16 +130,7 @@ abstract class AbstractApi implements ApiInterface, SerializerAwareInterface
     }
 
     /**
-     * Get request method
-     *
-     * @return string GET or POST
+     * Setup request method and uri
      */
-    abstract protected function getRequestMethod(): string;
-
-    /**
-     * Get request type
-     *
-     * @return string 'tradingApi' or 'public'
-     */
-    abstract protected function getRequestUri(): string;
+    abstract protected function setup(): void;
 }

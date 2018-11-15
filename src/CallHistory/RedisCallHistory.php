@@ -56,18 +56,20 @@ class RedisCallHistory implements CallHistoryInterface
     /**
      * {@inheritdoc}
      */
-    public function create(): void
+    public function create(string $proxy = null): void
     {
-        $this->redisClient->hincrby($this->getKey(), $this->getTime(), 1);
-        $this->redisClient->expireat($this->getKey(), strtotime('+' . $this->expireTime));
+        $key = $this->getKey($proxy);
+
+        $this->redisClient->hincrby($key, $this->getTime(), 1);
+        $this->redisClient->expireat($key, strtotime('+' . $this->expireTime));
     }
 
     /**
      * {@inheritdoc}
      */
-    public function isIncreased(): bool
+    public function isIncreased(string $proxy = null): bool
     {
-        return $this->redisClient->hget($this->getKey(), $this->getTime()) >= self::CALLS_PER_SECOND;
+        return $this->redisClient->hget($this->getKey($proxy), $this->getTime()) >= self::CALLS_PER_SECOND;
     }
 
     /**
@@ -81,12 +83,11 @@ class RedisCallHistory implements CallHistoryInterface
     }
 
     /**
-     * Get key
-     *
+     * @param string|null $proxy
      * @return string
      */
-    private function getKey(): string
+    private function getKey(string $proxy = null): string
     {
-        return 'poloniex:calls:' . $this->ip;
+        return 'poloniex:calls:' . ($proxy ?: $this->ip);
     }
 }

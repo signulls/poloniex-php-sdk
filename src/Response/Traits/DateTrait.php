@@ -12,6 +12,7 @@
 namespace Poloniex\Response\Traits;
 
 use DateTime;
+use Poloniex\Exception\PoloniexException;
 use Poloniex\Response\ResponseInterface;
 
 /**
@@ -39,13 +40,27 @@ trait DateTrait
 
     /**
      * @internal
-     * @param null $format
+     * @param string|null $format
      * @return string
      */
-    public function getDate($format = null): string
+    public function getDate(string $format = null): string
     {
         return $format
-            ? DateTime::createFromFormat(ResponseInterface::DATE_FORMAT, $this->date)->format($format)
+            ? $this->getDateTime()->format($format)
             : $this->date;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getDateTime(): DateTime
+    {
+        $dateTime = DateTime::createFromFormat(ResponseInterface::DATE_FORMAT, $this->date);
+
+        if (!$dateTime instanceof DateTime) {
+            throw new PoloniexException(sprintf('Unable to get DateTime object for date %s', $this->date));
+        }
+
+        return $dateTime;
     }
 }

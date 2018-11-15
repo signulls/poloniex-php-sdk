@@ -26,13 +26,16 @@ interface CallHistoryInterface
 
     /**
      * Create history record
+     *
+     * @param string|null $proxy
      */
-    public function create(): void;
+    public function create(string $proxy = null): void;
 
     /**
      * Check whether limit per second is increased
      *
+     * @param string|null $proxy
      * @return bool
      */
-    public function isIncreased(): bool;
+    public function isIncreased(string $proxy = null): bool;
 }

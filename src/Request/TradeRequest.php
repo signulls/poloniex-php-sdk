@@ -23,6 +23,7 @@ class TradeRequest implements RequestInterface
         'XMR' => 0.0001,
         'ETH' => 0.0001,
         'USDT' => 1,
+        'USDC' => 1,
     ];
 
     /**

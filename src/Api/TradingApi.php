@@ -19,6 +19,7 @@ use Poloniex\Response\TradingApi\{
     AvailableAccountBalances,
     Balance,
     MoveOrder,
+    OrderStatus,
     TradeResult,
     CompleteBalance,
     DepositAddresses,
@@ -213,6 +214,7 @@ class TradingApi extends AbstractApi
      */
     public function returnAllOpenOrders(): array
     {
+        $openOrders = [];
         foreach ($this->request('returnOpenOrders', ['currencyPair' => 'all']) as $pair => $orders) {
             if (is_array($orders)) {
                 foreach ($orders as $openOrder) {
@@ -221,7 +223,7 @@ class TradingApi extends AbstractApi
             }
         }
 
-        return $openOrders ?? [];
+        return $openOrders;
     }
 
     /**
@@ -324,6 +326,44 @@ class TradingApi extends AbstractApi
     public function sell(TradeRequest $tradeRequest): TradeResult
     {
         return $this->tradeRequest('sell', $tradeRequest);
+    }
+
+    /**
+     * Returns the status of a given order, specified by the "orderNumber" POST parameter.
+     * If the specified orderNumber is not open, or it is not yours, you will receive an error.
+     *
+     * Note that returnOrderStatus, in concert with returnOrderTrades,
+     * can be used to determine various status information about an order:
+     *
+     * 1) If returnOrderStatus returns status: "Open", the order is fully open.
+     * 2) If returnOrderStatus returns status: "Partially filled", the order is partially filled,
+     *    and returnOrderTrades may be used to find the list of those fills.
+     * 3) If returnOrderStatus returns an error and returnOrderTrades returns an error,
+     *    then the order was cancelled before it was filled.
+     * 4) If returnOrderStatus returns an error and returnOrderTrades returns a list of trades, then the order
+     *    had fills and is no longer open (due to being completely filled, or partially filled and then cancelled).
+     *
+     * @param int $orderNumber
+     *
+     * @return OrderStatus
+     *
+     * @throws \Poloniex\Exception\PoloniexException
+     */
+    public function returnOrderStatus(int $orderNumber): OrderStatus
+    {
+        $response = $this->request('returnOrderStatus', compact('orderNumber'));
+
+        $message = 'Unable to return order status';
+        $this->throwExceptionIf((int) $response['success'] === 0, $message);
+        $this->throwExceptionIf(!isset($response['result'][$orderNumber]), $message);
+
+        /* @var $orderStatus OrderStatus */
+        $orderStatus = $this->factory(
+            OrderStatus::class,
+            $response['result'][$orderNumber]
+        );
+
+        return $orderStatus;
     }
 
     /**
@@ -767,22 +807,6 @@ class TradingApi extends AbstractApi
     }
 
     /**
-     * {@inheritdoc}
-     */
-    protected function getRequestMethod(): string
-    {
-        return 'POST';
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function getRequestUri(): string
-    {
-        return 'tradingApi';
-    }
-
-    /**
      * The nonce parameter is an integer which must always be greater than the previous nonce used.
      * Generate a nonce to avoid problems with 32bit systems
      */
@@ -791,5 +815,14 @@ class TradingApi extends AbstractApi
         $time = explode(' ', microtime());
 
         return $time[1] . substr($time[0], 2, 6);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function setup(): void
+    {
+        $this->method = 'POST';
+        $this->uri = 'tradingApi';
     }
 }

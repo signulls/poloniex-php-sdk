@@ -107,7 +107,7 @@ abstract class AbstractApi implements ApiInterface, SerializerAwareInterface
             ->getContents();
 
         $this->proxy = null;
-        $response = json_decode($contents ?: '{}', true, 512, JSON_THROW_ON_ERROR) ?: [];
+        $response = json_decode($contents ?: '{}', true) ?: [];
         $this->throwExceptionIf(isset($response['error']), $response['error'] ?? 'Poloniex API unknown error.');
 
         return $response;

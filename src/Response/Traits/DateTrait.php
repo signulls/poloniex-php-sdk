@@ -45,7 +45,15 @@ trait DateTrait
     public function getDate($format = null): string
     {
         return $format
-            ? DateTime::createFromFormat(ResponseInterface::DATE_FORMAT, $this->date)->format($format)
+            ? $this->getDateTime()->format($format)
             : $this->date;
+    }
+
+    /**
+     * @return DateTime
+     */
+    public function getDateTime(): DateTime
+    {
+        return DateTime::createFromFormat(ResponseInterface::DATE_FORMAT, $this->date);
     }
 }

@@ -14,16 +14,9 @@
 
 This repository provides PHP client for Poloniex API.
 
-### Donate
-
-I gave for you a nice library for communication between your PHP project and Poloniex API. So, I will be so happy if you send me some coins for beer :)
-
-- **BTC**: 12HmN3pjD6AsN1rX4EQ1FXZDbHpeXyt7u9
-- **ETH**: 0xe18b26070cc692e8086ea169d9b3dff35a53f92c
-
 ### Prerequisites
 
-- PHP 7.1 or later
+- PHP 7.2 or later
 - Redis (for tracking your requests to Poloniex API Endpoint)
 
 ### Installation
@@ -58,7 +51,7 @@ $ticker = $publicApi->returnTicker();
 ```
 **Make calls to Trade API**
 ```markdown
-$tradingApi = new TradingApi($poloniexClient, $serializer);
+$tradingApi = new TradingApi($poloniexClient, $serializer, false);
 $tradingApi->setApiKey(new ApiKey('key', 'secret'));
 $balances = $tradingApi->returnBalances();
 ```

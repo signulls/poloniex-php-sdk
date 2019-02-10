@@ -13,7 +13,8 @@ namespace Poloniex\Api;
 
 use function is_array;
 use GuzzleHttp\RequestOptions;
-use Poloniex\{ApiKey, Exception\TotalDeficiencyException, Response\SampleResponse};
+use Symfony\Component\Serializer\SerializerInterface;
+use Poloniex\{ApiKey, Exception\TotalDeficiencyException, PoloniexClient, Response\SampleResponse};
 use Poloniex\Request\{CreateLoanOfferRequest, MoveOrderRequest, TradeRequest};
 use Poloniex\Response\TradingApi\{
     AvailableAccountBalances,
@@ -62,6 +63,28 @@ class TradingApi extends AbstractApi
     private $apiKey;
 
     /**
+     * @var bool
+     */
+    private $reset;
+
+    /**
+     * TradingApi constructor.
+     *
+     * @param PoloniexClient $client
+     * @param SerializerInterface $serializer
+     * @param bool $reset
+     */
+    public function __construct(
+        PoloniexClient $client,
+        SerializerInterface $serializer,
+        $reset = true
+    ) {
+        $this->reset = $reset;
+
+        parent::__construct($client, $serializer);
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function request(string $command, array $params = []): array
@@ -80,7 +103,10 @@ class TradingApi extends AbstractApi
         ];
 
         $response = parent::request($command, $params);
-        $this->apiKey = null;
+
+        if ($this->reset) {
+            $this->apiKey = null;
+        }
 
         return $response;
     }

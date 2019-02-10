@@ -41,16 +41,23 @@ class RedisCallHistory implements CallHistoryInterface
     private $ip;
 
     /**
+     * @var string
+     */
+    private $key;
+
+    /**
      * RedisCallHistory constructor.
      *
      * @param Client $client
      * @param string $expireTime
+     * @param string $key
      */
-    public function __construct(Client $client, string $expireTime = '1 hour')
+    public function __construct(Client $client, string $expireTime = '1 hour', string $key = 'poloniex:calls')
     {
         $this->ip = gethostbyname(gethostname());
         $this->expireTime = $expireTime;
         $this->redisClient = $client;
+        $this->key = $key;
     }
 
     /**
@@ -83,11 +90,13 @@ class RedisCallHistory implements CallHistoryInterface
     }
 
     /**
+     * Get redis key
+     *
      * @param string|null $proxy
      * @return string
      */
     private function getKey(string $proxy = null): string
     {
-        return 'poloniex:calls:' . ($proxy ?: $this->ip);
+        return $this->key . ':' . ($proxy ?: $this->ip);
     }
 }

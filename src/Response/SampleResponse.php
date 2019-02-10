@@ -36,7 +36,7 @@ class SampleResponse extends AbstractResponse
      * @internal
      * @param bool $success
      */
-    public function setSuccess(bool $success)
+    public function setSuccess(bool $success): void
     {
         $this->success = $success;
     }

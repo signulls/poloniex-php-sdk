@@ -33,13 +33,6 @@ class MoveOrder extends AbstractResponse
     public $orderNumber;
 
     /**
-     * NOTE: Array keys are currency pairs
-     *
-     * @var ResultingTrade[]
-     */
-    public $resultingTrades;
-
-    /**
      * @internal
      * @param bool $success
      */
@@ -55,32 +48,5 @@ class MoveOrder extends AbstractResponse
     public function setOrderNumber(int $orderNumber): void
     {
         $this->orderNumber = $orderNumber;
-    }
-
-    /**
-     * @internal
-     * @return ResultingTrade[]
-     */
-    public function getResultingTrades(): array
-    {
-        return $this->resultingTrades;
-    }
-
-    /**
-     * @internal
-     * @param ResultingTrade[] $resultingTrades
-     */
-    public function setResultingTrades(array $resultingTrades): void
-    {
-        $this->resultingTrades = $resultingTrades;
-    }
-
-    /**
-     * @internal
-     * @param ResultingTrade $resultingTrade
-     */
-    public function addResultingTrade(ResultingTrade $resultingTrade): void
-    {
-        $this->resultingTrades[] = $resultingTrade;
     }
 }

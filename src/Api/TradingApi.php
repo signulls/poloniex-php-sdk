@@ -428,11 +428,11 @@ class TradingApi extends AbstractApi
             );
         }
 
-        /** @var $moveOrder MoveOrder */
-        $moveOrder = $this->factory(
-            MoveOrder::class,
-            $this->request('moveOrder', get_object_vars($moveOrderRequest))
-        );
+        $response = $this->request('moveOrder', get_object_vars($moveOrderRequest));
+
+        $moveOrder = new MoveOrder();
+        $moveOrder->setOrderNumber($response['orderNumber']);
+        $moveOrder->setSuccess($response['success']);
 
         return $moveOrder;
     }

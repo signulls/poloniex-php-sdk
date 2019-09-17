@@ -5,6 +5,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/8d6540373ac975c83ccb/maintainability)](https://codeclimate.com/github/signulls/poloniex-php-sdk/maintainability)
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/e0c433d80a734031ac74c1867c9aeba1)](https://www.codacy.com/app/Signulls/poloniex-php-sdk?utm_source=github.com&utm_medium=referral&utm_content=signulls/poloniex-php-sdk&utm_campaign=Badge_Coverage)
 [![License](https://poser.pugx.org/signulls/poloniex-php-sdk/license)](https://packagist.org/packages/signulls/poloniex-php-sdk)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fsignulls%2Fpoloniex-php-sdk.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fsignulls%2Fpoloniex-php-sdk?ref=badge_shield)
 
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/signulls/poloniex-php-sdk/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/signulls/poloniex-php-sdk/?branch=master)
 [![Build Status](https://scrutinizer-ci.com/g/signulls/poloniex-php-sdk/badges/build.png?b=master)](https://scrutinizer-ci.com/g/signulls/poloniex-php-sdk/build-status/master)
@@ -65,3 +66,6 @@ Sometimes we screw up, but we'll adhere to those rules whenever possible.
 
 **Chasovskih Grisha**
 <chasovskihgrisha@gmail.com>
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fsignulls%2Fpoloniex-php-sdk.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fsignulls%2Fpoloniex-php-sdk?ref=badge_large)
